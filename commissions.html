@@ -248,20 +248,14 @@ nav {
         <textarea id="message" name="message" placeholder="Tell me about the piece — dimensions, wood preference, how you plan to use it, any inspiration photos..." required></textarea>
       </div>
 
-      <div class="form-group">
-        <label>Inspiration photos (optional)</label>
-        <div class="upload-area" id="upload-area">
-          <input type="file" id="photo-input" accept="image/*" multiple />
-          <div class="upload-icon">📷</div>
-          <div class="upload-label">Tap to add photos <span>or drag &amp; drop</span></div>
-          <div class="upload-hint">JPG, PNG, HEIC — up to 4 photos</div>
-        </div>
-        <div class="photo-previews" id="photo-previews"></div>
-      </div>
-
       <button type="submit" class="btn-submit" id="submit-btn">Send Message</button>
       <div class="form-error" id="form-error">Something went wrong. Please try again or email Pete directly at loongpetegarage@gmail.com</div>
     </form>
+
+    <div class="photo-note" id="photo-note" style="display:none;">
+      <div class="photo-note-text">Have inspiration photos? Send them to Pete — your message details are already in the subject line.</div>
+      <a class="photo-email-btn" id="photo-email-link" href="#">📎 &nbsp;Email photos to Pete</a>
+    </div>
 
     <div class="form-success" id="form-success">
       <div class="form-success-icon">✓</div>
@@ -305,75 +299,6 @@ nav {
     link.addEventListener('click', function() { mobileMenu.classList.remove('open'); });
   });
 
-  // ── Photo upload ──
-  var photoFiles = [];
-  var photoInput = document.getElementById('photo-input');
-  var uploadArea = document.getElementById('upload-area');
-  var previewsEl = document.getElementById('photo-previews');
-
-  photoInput.addEventListener('change', function() {
-    addFiles(Array.from(this.files));
-    this.value = '';
-  });
-  uploadArea.addEventListener('dragover', function(e) { e.preventDefault(); uploadArea.classList.add('drag-over'); });
-  uploadArea.addEventListener('dragleave', function() { uploadArea.classList.remove('drag-over'); });
-  uploadArea.addEventListener('drop', function(e) {
-    e.preventDefault(); uploadArea.classList.remove('drag-over');
-    addFiles(Array.from(e.dataTransfer.files).filter(function(f) { return f.type.startsWith('image/'); }));
-  });
-
-  function addFiles(files) {
-    files.forEach(function(file) {
-      if (photoFiles.length >= 4) return;
-      photoFiles.push(file);
-      var reader = new FileReader();
-      reader.onload = function(e) { renderPreview(e.target.result, photoFiles.length - 1); };
-      reader.readAsDataURL(file);
-    });
-  }
-
-  function renderPreview(src, idx) {
-    var item = document.createElement('div');
-    item.className = 'photo-preview-item';
-    item.dataset.idx = idx;
-    item.innerHTML = '<img src="' + src + '"><button class="photo-preview-remove" type="button">✕</button>';
-    item.querySelector('button').addEventListener('click', function() {
-      photoFiles.splice(idx, 1);
-      rebuildPreviews();
-    });
-    previewsEl.appendChild(item);
-  }
-
-  function rebuildPreviews() {
-    previewsEl.innerHTML = '';
-    var saved = photoFiles.slice();
-    photoFiles = [];
-    saved.forEach(function(file) {
-      photoFiles.push(file);
-      var reader = new FileReader();
-      reader.onload = function(e) { renderPreview(e.target.result, photoFiles.length - 1); };
-      reader.readAsDataURL(file);
-    });
-  }
-
-  // ── Resize image to max 900px wide, return base64 ──
-  function resizeImage(file, cb) {
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      var img = new Image();
-      img.onload = function() {
-        var maxW = 500, scale = Math.min(1, maxW / img.width);
-        var canvas = document.createElement('canvas');
-        canvas.width = img.width * scale;
-        canvas.height = img.height * scale;
-        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-        cb(canvas.toDataURL('image/jpeg', 0.5));
-      };
-      img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-  }
-
   // ── Form submit ──
   var form = document.getElementById('commission-form');
   var submitBtn = document.getElementById('submit-btn');
@@ -385,37 +310,30 @@ nav {
     submitBtn.textContent = 'Sending…';
     formError.style.display = 'none';
 
-    var pending = photoFiles.length;
-    var photosHtml = '';
+    var fromName  = document.getElementById('name').value;
+    var fromEmail = document.getElementById('email').value;
+    var piece     = document.getElementById('piece').value || 'Not selected';
+    var message   = document.getElementById('message').value;
 
-    function send() {
-      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        from_name:  document.getElementById('name').value,
-        from_email: document.getElementById('email').value,
-        piece:      document.getElementById('piece').value || 'Not selected',
-        message:    document.getElementById('message').value,
-        photos_html: photosHtml
-      }).then(function() {
-        form.style.display = 'none';
-        document.getElementById('form-success').style.display = 'block';
-      }, function() {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Send Message';
-        formError.style.display = 'block';
-      });
-    }
-
-    if (pending === 0) {
-      send();
-    } else {
-      photoFiles.forEach(function(file) {
-        resizeImage(file, function(dataUrl) {
-          photosHtml += '<img src="' + dataUrl + '" style="max-width:600px;width:100%;margin:8px 0;display:block;" />';
-          pending--;
-          if (pending === 0) send();
-        });
-      });
-    }
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      from_name:   fromName,
+      from_email:  fromEmail,
+      piece:       piece,
+      message:     message,
+      photos_html: ''
+    }).then(function() {
+      form.style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+      // Show photo email button pre-filled with their name and category
+      var subject = encodeURIComponent('Commission Photos — ' + fromName + ' (' + piece + ')');
+      var body = encodeURIComponent('Hi Pete,\n\nI just submitted a commission inquiry. Here are my inspiration photos.\n\nName: ' + fromName + '\nEmail: ' + fromEmail + '\nCategory: ' + piece);
+      document.getElementById('photo-email-link').href = 'mailto:loongpetegarage@gmail.com?subject=' + subject + '&body=' + body;
+      document.getElementById('photo-note').style.display = 'flex';
+    }, function() {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Message';
+      formError.style.display = 'block';
+    });
   });
 </script>
 
