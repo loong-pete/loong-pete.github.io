@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "loong-pete",
+      "runtimeExecutable": "/usr/bin/python3",
+      "runtimeArgs": ["-c", "import http.server, os; os.chdir('/Users/pete2026/Desktop/WOODWORKS/ PRODUCTS FOR WEBSITE-ETSY/ HTML'); http.server.test(HandlerClass=http.server.SimpleHTTPRequestHandler, port=8743)"],
+      "port": 8743
+    }
+  ]
+}

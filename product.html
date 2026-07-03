@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Product Details — Loong Pete Garage Woodcraft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=DM+Sans:wght@300;400;500&family=Plus+Jakarta+Sans:wght@600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #faf5ee; font-family: 'DM Sans', sans-serif; color: #1c0e04; min-height: 100vh; }
+
+  /* Nav */
+  .lp-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: url('Black-Walnut-Wood.jpg') right top/cover no-repeat; box-shadow: inset 0 0 0 9999px rgba(10,5,2,0.55); display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; height: 80px; }
+  .lp-nav-spacer { height: 80px; }
+  .lp-nav-brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .lp-nav-brand-name { font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 700; color: #f5e8d0; letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; }
+  .lp-nav-brand-sub { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 600; color: #d4a870; letter-spacing: 0.18em; text-transform: uppercase; margin-top: 4px; }
+  .lp-back { display: flex; align-items: center; gap: 6px; color: #d4a870; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; background: none; border: none; font-family: 'DM Sans', sans-serif; text-decoration: none; }
+  .lp-back:hover { color: #f5e8d0; }
+
+  /* Layout */
+  .lp-detail-wrap { max-width: 1100px; margin: 0 auto; padding: 2.5rem 2.5rem 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+
+  /* Gallery */
+  .lp-gallery-main-wrap { border-radius: 16px; overflow: hidden; background: #f5e8d4; aspect-ratio: 4/3; cursor: pointer; }
+  .lp-gallery-main { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.2s; }
+  .lp-gallery-main:hover { opacity: 0.93; }
+  .lp-gallery-thumbs { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .lp-gallery-thumb { width: 64px; height: 50px; object-fit: cover; border-radius: 8px; cursor: pointer; opacity: 0.6; border: 2px solid transparent; transition: opacity 0.15s; }
+  .lp-gallery-thumb:hover { opacity: 0.9; }
+  .lp-gallery-thumb.active { opacity: 1; border-color: #d4a870; }
+
+  /* Info panel */
+  .lp-info { display: flex; flex-direction: column; gap: 1.25rem; }
+  .lp-info-tag { font-size: 10px; color: #b07040; letter-spacing: 0.12em; text-transform: uppercase; }
+  .lp-info-name { font-family: 'Outfit', sans-serif; font-size: 1.8rem; font-weight: 700; color: #1c0e04; line-height: 1.15; }
+  .lp-info-price { font-family: 'Outfit', sans-serif; font-size: 1.3rem; font-weight: 600; color: #a05828; }
+  .lp-info-desc { font-size: 13.5px; color: #6c4c30; line-height: 1.7; font-weight: 300; }
+
+  /* Specs */
+  .lp-specs { background: #fff8f0; border: 0.5px solid #e8d5be; border-radius: 14px; padding: 1.25rem 1.5rem; display: flex; flex-direction: column; gap: 0; }
+  .lp-specs-title { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; color: #b07040; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.75rem; }
+  .lp-spec-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 0.6rem 0; border-bottom: 0.5px solid #f0e0cc; gap: 1rem; }
+  .lp-spec-row:last-child { border-bottom: none; }
+  .lp-spec-label { font-size: 12px; color: #8c6340; font-weight: 400; flex-shrink: 0; }
+  .lp-spec-value { font-size: 12px; color: #1c0e04; font-weight: 500; text-align: right; }
+  .lp-spec-value.tbd { color: #b0906a; font-style: italic; font-weight: 300; }
+
+  /* Customization */
+  .lp-custom-box { background: #fdf0e0; border: 0.5px solid #e8c89a; border-radius: 14px; padding: 1.1rem 1.5rem; }
+  .lp-custom-title { font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 700; color: #a05828; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 0.4rem; }
+  .lp-custom-text { font-size: 13px; color: #6c4c30; line-height: 1.6; font-weight: 300; }
+
+  /* CTA */
+  .lp-cta { display: flex; flex-direction: column; gap: 10px; }
+  .lp-btn-primary { background: #1c0e04; color: #fff8f0; border: none; padding: 14px 24px; border-radius: 100px; font-size: 14px; font-family: 'DM Sans', sans-serif; cursor: pointer; font-weight: 500; width: 100%; text-align: center; }
+  .lp-btn-primary:hover { background: #2e1a08; }
+  .lp-btn-secondary { background: none; color: #a05828; border: 1px solid #d4b896; padding: 12px 24px; border-radius: 100px; font-size: 13px; font-family: 'DM Sans', sans-serif; cursor: pointer; width: 100%; text-align: center; }
+  .lp-btn-secondary:hover { background: #fff8f0; }
+  .lp-note { font-size: 11px; color: #b07040; text-align: center; line-height: 1.5; }
+
+  /* Lightbox */
+  #lp-lb { display:none; position:fixed; inset:0; background:rgba(8,3,0,0.92); z-index:1100; align-items:center; justify-content:center; flex-direction:column; gap:10px; }
+  #lp-lb img { max-height:82vh; max-width:92vw; border-radius:8px; object-fit:contain; }
+  #lp-lb-close { position:absolute; top:18px; right:22px; background:none; border:none; color:#f5e8d0; font-size:26px; cursor:pointer; }
+  .lp-lb-nav { display:flex; gap:12px; }
+  .lp-lb-nav button { background:rgba(255,255,255,0.12); border:none; color:#f5e8d0; font-size:20px; width:40px; height:40px; border-radius:50%; cursor:pointer; }
+
+  /* Mobile */
+  @media (max-width: 700px) {
+    .lp-nav { padding: 0 1.25rem; }
+    .lp-detail-wrap { grid-template-columns: 1fr; padding: 1.5rem 1.25rem 3rem; gap: 1.75rem; }
+    .lp-info-name { font-size: 1.5rem; }
+    .lp-back { display: none; }
+    .hamburger { display: block; }
+  }
+  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
+  .hamburger span { display: block; width: 22px; height: 2px; background: #f5e8d0; margin: 5px 0; border-radius: 2px; }
+  .mobile-menu { display: none; position: absolute; top: 72px; left: 0; right: 0; background: url('Black-Walnut-Wood.jpg') right top/cover no-repeat; box-shadow: inset 0 0 0 9999px rgba(10,5,2,0.92); border-top: 0.5px solid rgba(255,255,255,0.08); padding: 1.25rem 1.5rem 1.5rem; z-index: 99; flex-direction: column; }
+  .mobile-menu a { display: block; font-size: 14px; color: rgba(245,232,208,0.8); text-decoration: none; letter-spacing: 0.04em; padding: 0.85rem 0; border-bottom: 0.5px solid rgba(255,255,255,0.07); }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu.open { display: flex; }
+</style>
+</head>
+<body>
+
+<nav class="lp-nav">
+  <a class="lp-nav-brand" href="index.html">
+    <img src="loong-pete-logo-transparent.png" alt="Loong Pete" style="height:68px;width:auto;" />
+    <div>
+      <div class="lp-nav-brand-name">Loong Pete</div>
+      <div class="lp-nav-brand-sub">Garage Woodcraft</div>
+    </div>
+  </a>
+  <a class="lp-back" href="index.html">&#8592; Back to collection</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html">&#8592; Back to collection</a>
+  <a href="index.html#shop">Shop</a>
+  <a href="commissions.html">Commissions</a>
+</div>
+<div class="lp-nav-spacer"></div>
+
+<div class="lp-detail-wrap">
+  <!-- Gallery -->
+  <div>
+    <div class="lp-gallery-main-wrap" onclick="lbOpen(0)">
+      <img id="lp-main-img" class="lp-gallery-main" src="" alt="" />
+    </div>
+    <div class="lp-gallery-thumbs" id="lp-thumbs"></div>
+  </div>
+
+  <!-- Info -->
+  <div class="lp-info">
+    <div>
+      <div class="lp-info-tag" id="lp-tag"></div>
+      <div class="lp-info-name" id="lp-name"></div>
+    </div>
+    <div class="lp-info-price" id="lp-price"></div>
+    <div class="lp-info-desc" id="lp-desc"></div>
+
+    <div class="lp-specs">
+      <div class="lp-specs-title">Specs</div>
+      <div class="lp-spec-row"><span class="lp-spec-label">Dimensions</span><span class="lp-spec-value tbd" id="spec-dimensions">Coming soon</span></div>
+      <div class="lp-spec-row"><span class="lp-spec-label">Wood</span><span class="lp-spec-value tbd" id="spec-wood">Coming soon</span></div>
+      <div class="lp-spec-row"><span class="lp-spec-label">Finish</span><span class="lp-spec-value tbd" id="spec-finish">Coming soon</span></div>
+      <div class="lp-spec-row" id="spec-includes-row" style="display:none;"><span class="lp-spec-label">Includes</span><span class="lp-spec-value" id="spec-includes"></span></div>
+    </div>
+
+    <div class="lp-custom-box">
+      <div class="lp-custom-title">Customization</div>
+      <div class="lp-custom-text" id="lp-custom">Coming soon — options like engraved names, quotes, custom dimensions, and wood choice will be listed here.</div>
+    </div>
+
+    <div class="lp-cta">
+      <button class="lp-btn-primary" onclick="mailto()">Request this piece</button>
+      <button class="lp-btn-secondary" onclick="history.back()">&#8592; Back to collection</button>
+      <div class="lp-note">All pieces are handmade to order in San Antonio, TX.<br>Contact me to discuss sizing, wood, and custom options.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Video overlay -->
+<div id="lp-vid-overlay" style="display:none;position:fixed;inset:0;background:rgba(8,3,0,0.94);z-index:1200;align-items:center;justify-content:center;" onclick="if(event.target===this)vidClose()">
+  <button onclick="vidClose()" style="position:absolute;top:18px;right:22px;background:none;border:none;color:#f5e8d0;font-size:26px;cursor:pointer;">&#x2715;</button>
+  <video id="lp-vid-player" src="" controls style="max-height:88vh;max-width:92vw;border-radius:10px;"></video>
+</div>
+
+<!-- Lightbox -->
+<div id="lp-lb">
+  <button id="lp-lb-close" onclick="lbClose()">&#x2715;</button>
+  <img id="lp-lb-img" src="" alt="" />
+  <div class="lp-lb-nav">
+    <button onclick="lbStep(-1)">&#8592;</button>
+    <button onclick="lbStep(1)">&#8594;</button>
+  </div>
+</div>
+
+<script>
+// ── Product data ──────────────────────────────────────────────
+var LP_DETAILS = {
+  'adirondak-chair': {
+    name: 'Modern Adirondack 3-Piece Set (2 Chairs & Side Table)', tag: 'Furniture', price: 'From $525',
+    desc: 'A modern Adirondack chair with a matching side table, built by hand in the garage. Solid construction, comfortable wide seat, and a timeless silhouette that looks great on any porch or patio.',
+    photos: ['ADIRONDAK CHAIR/ADIRONDAK CHAIR-COMPLETE/ADIRONDAK CHAIR-COMPLETE1.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-COMPLETE/ADIRONDAK CHAIR-COMPLETE2.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-COMPLETE/ADIRONDAK CHAIR-COMPLETE3.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-COMPLETE/ADIRONDAK CHAIR-COMPLETE4.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-COMPLETE/ADIRONDAK CHAIR-COMPLETE5.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-COMPLETE/ADIRONDAK CHAIR-COMPLETE6.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-COMPLETE/ADIRONDAK CHAIR-COMPLETE7.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-PROCESS/ADIRONDAK CHAIR-PROCESS1.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-PROCESS/ADIRONDAK CHAIR-PROCESS2.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-PROCESS/ADIRONDAK CHAIR-PROCESS3.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-PROCESS/ADIRONDAK CHAIR-PROCESS4.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-PROCESS/ADIRONDAK CHAIR-PROCESS5.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-PROCESS/ADIRONDAK CHAIR-PROCESS6.jpeg'],
+    dimensions: 'Chair: W 31" × L 32" × H 38" · Side Table: W 16" × L 16" × H 19"', wood: 'Cedar', finish: 'Any color of your choice', custom: ''
+  },
+  'japanese-inspired-bench': {
+    name: 'Japanese-Inspired Bench', tag: 'Furniture', price: 'From $500',
+    desc: 'Clean lines and a low-profile silhouette inspired by Japanese joinery. A versatile piece that works as a seat, a display surface, or an entryway accent. Back rest is removable.',
+    photos: ['BENCH (JAPANESE ART INSPIRED)/BENCH (JAPANESE ART INSPIRED)/BENCH (JAPANESE ART INSPIRED)5.jpeg','BENCH (JAPANESE ART INSPIRED)/BENCH (JAPANESE ART INSPIRED)/BENCH (JAPANESE ART INSPIRED)1.jpeg','BENCH (JAPANESE ART INSPIRED)/BENCH (JAPANESE ART INSPIRED)/BENCH (JAPANESE ART INSPIRED)3.jpeg','BENCH (JAPANESE ART INSPIRED)/BENCH (JAPANESE ART INSPIRED)/BENCH (JAPANESE ART INSPIRED)6.jpeg','BENCH (JAPANESE ART INSPIRED)/BENCH (JAPANESE ART INSPIRED)/BENCH (JAPANESE ART INSPIRED)7.jpeg','BENCH (JAPANESE ART INSPIRED)/BENCH (JAPANESE ART INSPIRED) -dimension.png'],
+    dimensions: 'W 16½" × L 72" × H 18" (H with backrest 28")', wood: 'Cedar', finish: 'Wood Stain Dark Walnut', custom: 'Available in two versions — bench only (no back rest) from $500, or full version with back rest and elevated display surface from $750.'
+  },
+  'college-pennant-frame': {
+    name: 'College Pennant Frame', tag: 'Decor', price: '$40',
+    desc: 'A custom display frame built to show off a college pennant with pride. Great gift for graduates, fans, or anyone with school spirit. Fit standard Traditional Felt Pennants 12" x 30". Open-front design — no plexiglass. Double-sided tape is pre-applied to the back panel so you can attach your pennant in seconds.',
+    photos: ['COLLEGE PENNANT FRAME/COLLEGE PENNANT FRAME/COLLEGE PENNANT FRAME2.jpeg','COLLEGE PENNANT FRAME/COLLEGE PENNANT FRAME/COLLEGE PENNANT FRAME1.jpeg','COLLEGE PENNANT FRAME/COLLEGE PENNANT FRAME/COLLEGE PENNANT FRAME3.jpeg'],
+    dimensions: 'Thickness 1¼" × L 37" × H 13¼"', wood: 'Pine', finish: 'Gloss Black or White', custom: ''
+  },
+  'cutting-board-style-1': {
+    name: 'End Grain Cutting Board — Style 1 (2" thick)', tag: 'Kitchen', price: 'From $150',
+    desc: 'A solid hardwood cutting board built to last. Smooth surface, good weight, and crafted with care to be both functional and beautiful on your counter.',
+    photos: ['CUTTING BOARD 1/CUTTING BOARD 1-COMPLETE/CUTTING BOARD 1-COMPLETE1.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-COMPLETE/CUTTING BOARD 1-COMPLETE2.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-COMPLETE/CUTTING BOARD 1-COMPLETE3.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-COMPLETE/CUTTING BOARD 1-COMPLETE4.jpeg'],
+    dimensions: 'Thickness 2" × W 9⅜" × L 11¼"', wood: 'Dark Walnut & Maple', finish: 'Mineral Oil (food grade)', includes: 'Rubber feet', custom: ''
+  },
+  'side-table-happy-accident': {
+    name: 'Side Table (Happy Accident)', tag: 'Furniture', price: 'One of a Kind — Sold',
+    desc: 'This one started as a stool that didn\'t quite work out — the legs were too tall and the center of gravity just wasn\'t right. So it became a side table that did. Some of the best builds come from knowing when to change course.',
+    photos: ['FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-COMPLETE/FAILED STOOL BECAME SIDE TABLE-COMPLETE1.jpg','FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-COMPLETE/FAILED STOOL BECAME SIDE TABLE-COMPLETE2.jpg','FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-COMPLETE/FAILED STOOL BECAME SIDE TABLE-COMPLETE3.jpg','FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-COMPLETE/FAILED STOOL BECAME SIDE TABLE-COMPLETE4.jpg','FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-COMPLETE/FAILED STOOL BECAME SIDE TABLE-COMPLETE5.jpg','FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-PROCESS/FAILED STOOL BECAME SIDE TABLE-PROCESS1.jpeg','FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-PROCESS/FAILED STOOL BECAME SIDE TABLE-PROCESS2.jpeg','FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-PROCESS/FAILED STOOL BECAME SIDE TABLE-PROCESS3.jpeg','FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-PROCESS/FAILED STOOL BECAME SIDE TABLE-PROCESS4.jpeg','FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-PROCESS/FAILED STOOL BECAME SIDE TABLE-PROCESS5.jpeg','FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-PROCESS/FAILED STOOL BECAME SIDE TABLE-PROCESS6.jpeg','FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-PROCESS/FAILED STOOL BECAME SIDE TABLE-PROCESS7.jpeg','FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-PROCESS/FAILED STOOL BECAME SIDE TABLE-PROCESS8.jpeg'],
+    dimensions: 'W 14¼" × L 18¼" × H 23"', wood: 'Baltic Birch Plywood', finish: 'Lacquer', custom: ''
+  },
+  'salad-server': {
+    name: 'Salad Server Set', tag: 'Kitchen', price: '$90',
+    desc: 'A set of two salad servers, all hand carved from a single piece of wood. Smooth, comfortable in hand, and beautiful on the table. Food-safe mineral oil finish.',
+    photos: ['SALAD SERVER/SALAD SERVER1.jpeg','SALAD SERVER/SALAD SERVER2.jpeg','SALAD SERVER/SALAD SERVER3.jpeg'],
+    dimensions: 'L 11" × W 2½" × H 2"', wood: 'Ash (as shown), Walnut, or Maple', finish: 'Mineral Oil (food grade)', custom: ''
+  },
+  'hardwood-figurine': {
+    name: 'Hardwood Figurine', tag: 'Decor', price: '$35',
+    desc: 'A handcrafted hardwood figurine, shaped and finished by hand. A small but meaningful piece — great as a gift or a unique accent on a shelf or desk.',
+    photos: ['HANDCRAFTED HARDWOOD FIGURINE/HANDCRAFTED HARDWOOD FIGURINE1.jpg','HANDCRAFTED HARDWOOD FIGURINE/HANDCRAFTED HARDWOOD FIGURINE2.jpg','HANDCRAFTED HARDWOOD FIGURINE/HANDCRAFTED HARDWOOD FIGURINE3.jpg','HANDCRAFTED HARDWOOD FIGURINE/HANDCRAFTED HARDWOOD FIGURINE4.jpg'],
+    dimensions: 'Thickness ¾" × L 8½" × H 3½"', wood: 'Maple or Walnut', finish: 'Lacquer', custom: ''
+  },
+  'key-tray-gigi': {
+    name: 'Hardwood Catch-all Tray — Style 1', tag: 'Decor', price: 'From $55',
+    desc: 'A carved catch-all tray made perfectly for keeping keys, coins, and everyday essentials organized right by the door. Can be customized with a name or short message.',
+    photos: ['KEY TRAY1-GIGI/Catch-all Tray — Style 11 (2).jpeg','KEY TRAY1-GIGI/Catch-all Tray — Style 12 (2).jpeg','KEY TRAY1-GIGI/Catch-all Tray — Style 14 (2).jpeg','KEY TRAY1-GIGI/Catch-all Tray — Style 15 (2).jpeg','KEY TRAY1-GIGI/Catch-all Tray — Style 17 (2).jpeg','KEY TRAY1-GIGI/Catch-all Tray — Style 18 (2).jpeg','KEY TRAY1-GIGI/Catch-all Tray — Style 19 (2).jpeg','KEY TRAY1-GIGI/Catch-all Tray — Style 110 (2).jpeg','KEY TRAY1-GIGI/Catch-all Tray — Style 111 (2).jpeg','KEY TRAY1-GIGI/Catch-all Tray — Style 112 (2).jpeg'],
+    dimensions: 'W 4" × L 8" × H 2"', wood: 'Walnut or Maple (your choice)', finish: 'Tung Oil', custom: 'Can be engraved with a name or short quote.'
+  },
+  'pen-holder': {
+    name: 'Pen Holder (Free Name Engraving)', tag: 'Desk', price: '$50',
+    desc: 'A clean, solid wood pen and pencil holder for your desk. Simple design that keeps things tidy without getting in the way.',
+    photos: ['PEN HOLDER/PEN HOLDER-COMPLETE/PEN HOLDER-COMPLETE1.jpg','PEN HOLDER/PEN HOLDER-COMPLETE/PEN HOLDER-COMPLETE2.jpg','PEN HOLDER/PEN HOLDER-COMPLETE/PEN HOLDER-COMPLETE3.jpg','PEN HOLDER/PEN HOLDER-COMPLETE/PEN HOLDER-COMPLETE4.jpg','PEN HOLDER/PEN HOLDER-COMPLETE/PEN HOLDER-COMPLETE5.jpg','PEN HOLDER/PEN HOLDER-COMPLETE/PEN HOLDER-COMPLETE6.jpg'],
+    dimensions: 'W 3¾" × L 3¾" × H 5"', wood: 'Walnut or Maple (your choice)', finish: 'Lacquer', custom: 'Engrave a name, short phrase or logo — personalize it for yourself or as a gift.'
+  },
+  'phone-charger-organizer': {
+    name: 'Phone Charger Organizer', tag: 'Desk', price: 'Organizer Only (16") $95 · With Side Compartments (34") $155',
+    desc: 'A solid wood organizer that keeps your phone charged and your desk tidy. Solid walnut cable hooks on the front keep your charging cables hanging and ready to grab — available on both options.<br><br>Go with the 16" organizer only, or add both side compartments to expand storage for cables, cards, and small items.',
+    photos: ['PHONE CHARGER ORGANIZER BOX/PHONE CHARGER ORGANIZER BOX-COMPLETE/PHONE CHARGER ORGANIZER BOX-COMPLETE1.jpg','PHONE CHARGER ORGANIZER BOX/PHONE CHARGER ORGANIZER BOX-COMPLETE/PHONE CHARGER ORGANIZER BOX-COMPLETE2.jpg','PHONE CHARGER ORGANIZER BOX/PHONE CHARGER ORGANIZER BOX-COMPLETE/PHONE CHARGER ORGANIZER BOX-COMPLETE3.jpg','PHONE CHARGER ORGANIZER BOX/PHONE CHARGER ORGANIZER BOX-COMPLETE/PHONE CHARGER ORGANIZER BOX-COMPLETE4.jpg'],
+    dimensions: 'W 5½" × L 34" × H 5"', wood: 'Pine', finish: 'White Semi-Gloss', custom: ''
+  },
+  'phone-stand-style-2': {
+    name: 'Phone Stand — Style 2 (Free Name Engraving)', tag: 'Desk', price: '$40',
+    desc: 'A solid wood phone stand with a clean, minimal profile. Keeps your phone at a comfortable viewing angle on your desk or nightstand.',
+    photos: ['PHONE STAND 2/PHONE STAND 2-COMPLETE/PHONE STAND 2-COMPLETE1.jpeg','PHONE STAND 2/PHONE STAND 2-COMPLETE/PHONE STAND 2-COMPLETE2.jpeg','PHONE STAND 2/PHONE STAND 2-COMPLETE/PHONE STAND 2-COMPLETE3.jpeg','PHONE STAND 2/PHONE STAND 2-COMPLETE/PHONE STAND 2-COMPLETE4.jpeg','PHONE STAND 2/PHONE STAND 2-COMPLETE/PHONE STAND 2-COMPLETE5.jpeg','PHONE STAND 2/PHONE STAND 2-COMPLETE/PHONE STAND 2-COMPLETE6.jpeg','PHONE STAND 2/PHONE STAND 2-PROCESS/PHONE STAND 2-PROCESS1.jpeg','PHONE STAND 2/PHONE STAND 2-PROCESS/PHONE STAND 2-PROCESS2.jpeg','PHONE STAND 2/PHONE STAND 2-PROCESS/PHONE STAND 2-PROCESS3.jpeg','PHONE STAND 2/PHONE STAND 2-PROCESS/PHONE STAND 2-PROCESS4.jpeg','PHONE STAND 2/PHONE STAND 2-PROCESS/PHONE STAND 2-PROCESS5.jpeg'],
+    dimensions: 'W 3¼" × L 2⅜" × H 3⅜"', wood: 'Walnut, Maple, Ash or Cedar (your choice)', finish: 'Tung Oil', custom: 'Engrave a name, short phrase or logo — personalize it for yourself or as a gift.', video: 'PHONE STAND 2/PHONE STAND 2-COMPLETE/PHONE STAND 2-COMPLETE7.mov'
+  },
+  'picture-frame-variety': {
+    name: 'Picture Frame Variety', tag: 'Decor', price: 'From $45',
+    desc: 'Handcrafted picture frames in a variety of sizes and styles. Each frame is built from solid wood and finished by hand — no two are exactly alike.',
+    photos: ['PICTURE FRAME VARIETY/PICTURE FRAME VARIETY6.jpg','PICTURE FRAME VARIETY/PICTURE FRAME VARIETY1.jpeg','PICTURE FRAME VARIETY/PICTURE FRAME VARIETY2.jpeg','PICTURE FRAME VARIETY/PICTURE FRAME VARIETY3.jpeg','PICTURE FRAME VARIETY/PICTURE FRAME VARIETY4.jpeg','PICTURE FRAME VARIETY/PICTURE FRAME VARIETY5.jpg','PICTURE FRAME VARIETY/PICTURE FRAME VARIETY7.jpg','PICTURE FRAME VARIETY/PICTURE FRAME VARIETY8.jpg','PICTURE FRAME VARIETY/PICTURE FRAME VARIETY9.jpg','PICTURE FRAME VARIETY/PICTURE FRAME VARIETY10.jpeg','PICTURE FRAME VARIETY/PICTURE FRAME VARIETY11.jpeg','PICTURE FRAME VARIETY/PICTURE FRAME VARIETY12.jpeg'],
+    dimensions: '', wood: '', finish: '', custom: 'Available in custom sizes. Can add a name or date to the frame.'
+  },
+  'shoe-horn-long-short': {
+    name: 'Shoe Horn — Long & Extra Long', tag: 'Home', price: 'Long $55 · Extra Long $65',
+    desc: 'Handcrafted wood shoe horns in both long-handle and short-handle versions. Smooth, functional, and a lot more elegant than the plastic kind. Comes with a genuine leather hanging loop so you can hang it by the door or in your closet.',
+    photos: ['SHOE HORN LONG & SHORT/SHOE HORN8.jpg','SHOE HORN LONG & SHORT/SHOE HORN9.jpg','SHOE HORN LONG & SHORT/SHOE HORN1 copy.jpg','SHOE HORN LONG & SHORT/SHOE HORN6 copy.jpg','SHOE HORN LONG & SHORT/SHOE HORN2 copy.jpg','SHOE HORN LONG & SHORT/SHOE HORN3 copy.jpg','SHOE HORN LONG & SHORT/SHOE HORN5 copy.jpg','SHOE HORN LONG & SHORT/SHOE HORN7 copy.jpg'],
+    dimensions: 'Thickness ⅜" × W 1⅝" · Extra Long: L 30" · Long: L 20"', wood: 'Walnut or Maple (your choice)', finish: 'Tung Oil', custom: ''
+  },
+  'japanese-inspired-stool': {
+    name: 'Japanese-Inspired Stool', tag: 'Furniture', price: 'From $195',
+    desc: 'A low, sturdy stool with clean Japanese-inspired joinery. Works as a seat, a step stool, or a display platform. Simple form, solid build.',
+    photos: ['STOOL (JAPANESE INSPIRED)/STOOL (JAPANESE INSPIRED)1 copy.jpg','STOOL (JAPANESE INSPIRED)/STOOL (JAPANESE INSPIRED)2 copy.jpg','STOOL (JAPANESE INSPIRED)/STOOL (JAPANESE INSPIRED)3 copy.jpg','STOOL (JAPANESE INSPIRED)/STOOL (JAPANESE INSPIRED)5 copy.jpg','STOOL (JAPANESE INSPIRED)/STOOL (JAPANESE INSPIRED)6 copy.jpg'],
+    dimensions: 'W 8½" × L 12" × H 12"', wood: 'Walnut or Maple (your choice)', finish: 'Tung Oil', custom: ''
+  },
+  'dog-bowl-stand': {
+    name: 'Dog Bowl Stand', tag: 'Pet', price: 'Small $75 · Small + Name Tag $95 · Large $95 · Large + Name Tag $115',
+    desc: 'An elevated dog bowl stand with a clean two-tone look. Softwood legs and frame finished in black stain with a rustic character. Top panel available in your choice of solid Walnut or Maple — natural grain, no mixing.<br><br><span style="display:block;margin-top:1rem;">Note: The name tag shown in photos uses cut-out letters and is not available for order. Instead, we offer a laser-engraved name tag that hangs on the front of the stand — clean, durable, and personalized with your dog\'s name.</span>',
+    video: 'DOG BOW STAND/DOG BOW STAND9.mov', photos: ['DOG BOW STAND/DOG BOW STAND1.jpeg','DOG BOW STAND/DOG BOW STAND2.jpeg','DOG BOW STAND/DOG BOW STAND3.jpeg','DOG BOW STAND/DOG BOW STAND4.jpeg','DOG BOW STAND/DOG BOW STAND5.jpeg','DOG BOW STAND/DOG BOW STAND6.jpeg','DOG BOW STAND/DOG BOW STAND7.jpeg','DOG BOW STAND/DOG BOW STAND8.jpeg'],
+    dimensions: 'Small: W 8" × L 17" × H 7¾"<br>Large: W 10" × L 22½" × H 9½" (as shown)', wood: 'Walnut & Maple', finish: 'Water-Based Urethane', includes: 'Bowls Included', custom: 'Custom sizing available for different bowl sizes.'
+  },
+  'serving-tray': {
+    name: 'Serving Tray', tag: 'Kitchen', price: '$160',
+    desc: 'A striking hardwood serving tray available in two styles.<br><br>Style 1 — Purpleheart dominant with Walnut and Maple accent strips in the middle.<br>Style 2 — Maple and Cherry blend with a Purpleheart accent strip.<br><br>Both styles same price — just pick the look you love.',
+    photos: ['TRAY/TRAY-COMPLETE/TRAY-COMPLETE2.jpeg','TRAY/TRAY-COMPLETE/TRAY-COMPLETE3.jpeg','TRAY/TRAY-COMPLETE/TRAY-COMPLETE4.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS1.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS2.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS3.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS4.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS5.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS6.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS7.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS8.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS9.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS10.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS11.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS12.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS13.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS15.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS16.jpeg'],
+    dimensions: 'W 11⅞" × L 15" × H 2" (wall thickness ¼")', wood: 'Purpleheart, Maple, Walnut', finish: 'Lacquer', custom: '', video: 'TRAY/TRAY-PROCESS/TRAY-PROCESS14.mov'
+  },
+  'mallet': {
+    name: 'Right-Hand Mallet', tag: 'Tools', price: 'From $75',
+    desc: 'A handcrafted wood mallet with a handle carved to fit perfectly in the right hand — like it\'s been in someone\'s shop for a hundred years. Balanced, solid, and built to last with a look that\'s too good to hide in a drawer.',
+    photos: ['MALLET/MALLET-COMPLETE/MALLET-COMPLETE4.jpeg','MALLET/MALLET-COMPLETE/MALLET-COMPLETE1.jpeg','MALLET/MALLET-COMPLETE/MALLET-COMPLETE2.jpeg','MALLET/MALLET-COMPLETE/MALLET-COMPLETE3.jpeg','MALLET/MALLET-COMPLETE/MALLET-COMPLETE5.jpeg','MALLET/MALLET-COMPLETE/MALLET-COMPLETE6.jpeg','MALLET/MALLET-COMPLETE/MALLET-COMPLETE7.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS1.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS2.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS3.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS4.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS5.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS6.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS7.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS8.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS9.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS10.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS11.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS12.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS13.jpeg'],
+    dimensions: 'W 4¾" × L 3" × H 10"', wood: 'Ash & Cherry', finish: 'Tung Oil', custom: '', video: 'MALLET/MALLET-COMPLETE/MALLET-COMPLETE8.mov'
+  },
+  'outdoor-shoes-rack-storage': {
+    name: 'Outdoor Shoe Rack + Storage', tag: 'Outdoor', price: 'Small $250 · Large $325',
+    desc: 'An outdoor shoe rack with built-in waterproof storage. Keeps entryways clean and organized — shoes on the rack, essentials stored below.',
+    photos: ['OUTDOOR SHOES RACK+STORAGE/OUTDOOR SHOES RACK+STORAGE3.jpeg','OUTDOOR SHOES RACK+STORAGE/OUTDOOR SHOES RACK+STORAGE1.jpeg','OUTDOOR SHOES RACK+STORAGE/OUTDOOR SHOES RACK+STORAGE2.jpeg','OUTDOOR SHOES RACK+STORAGE/OUTDOOR SHOES RACK+STORAGE4.jpeg','OUTDOOR SHOES RACK+STORAGE/OUTDOOR SHOES RACK+STORAGE5.jpeg','OUTDOOR SHOES RACK+STORAGE/OUTDOOR SHOES RACK+STORAGE6.jpeg','OUTDOOR SHOES RACK+STORAGE/OUTDOOR SHOES RACK+STORAGE7.jpeg','OUTDOOR SHOES RACK+STORAGE/OUTDOOR SHOES RACK+STORAGE8.jpeg'],
+    dimensions: 'W 21½" × H 24" · L 30" $250 · L 49¼" $325', wood: 'Baltic Birch Plywood', finish: 'Gloss White', custom: ''
+  },
+  'pantry-bag-holder': {
+    name: 'Pantry Bag Holder', tag: 'Kitchen', price: 'From $45',
+    desc: 'A clever box designed to store and dispense plastic bags cleanly. Round openings on the front let you pull bags out one at a time — keeps your pantry tidy.',
+    photos: ['PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE1.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE2.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE3.jpeg'],
+    dimensions: 'W 11" × L 12" × H 11"', wood: 'Baltic Birch Plywood', finish: 'Lacquer', custom: 'Can be built to custom dimensions to fit your pantry.'
+  },
+  'soda-can-dispenser': {
+    name: 'Soda Can Dispenser', tag: 'Kitchen', price: '$45',
+    desc: 'A two-level gravity-feed can dispenser. Load cans in the top, grab them from the bottom — always FIFO, always organized. Built for soda cans but works with any standard can size.',
+    photos: ['PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE4.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE5.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE6.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE7.jpeg'],
+    dimensions: 'W 11" × L 12" × H 11"', wood: 'Baltic Birch Plywood', finish: 'Lacquer', custom: 'Can be built to hold different can counts or sizes.'
+  },
+  'dry-goods-storage-bins': {
+    name: 'Dry Goods Storage Bins', tag: 'Kitchen', price: '$29',
+    desc: 'A set of open-front angled storage bins, perfect for garlic, onions, potatoes, and other dry pantry staples. Easy to access, easy to refill.',
+    photos: ['PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE8.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE9.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE10.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE11.jpeg'],
+    dimensions: 'W 10¾" × L 7½" × H 11"', wood: 'Baltic Birch Plywood', finish: 'Lacquer', custom: 'Available as a set of 2 or 3 bins. Custom widths available.'
+  },
+  'two-tier-can-stand': {
+    name: 'Two-Tier Can Stand', tag: 'Kitchen', price: 'Short $25 · Long $30',
+    desc: 'A stepped two-tier shelf that lets you see all your canned goods at once — no more digging to the back of the pantry. Simple, sturdy, and space-efficient.',
+    photos: ['PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE12.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE13.jpeg'],
+    dimensions: 'W 6½" × H 5" · L 16" $25 · L 24" $30', wood: 'Baltic Birch Plywood', finish: 'Gloss White', custom: ''
+  },
+  'door-pantry-shelf': {
+    name: 'Pantry Door Shelf Organizer', tag: 'Kitchen', price: 'Bottom Shelf $95 · Top Shelf $129',
+    desc: 'A multi-slot shelf that mounts on the back of a pantry door, turning dead space into organized storage. Built to fit standard door widths.',
+    photos: ['PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE15.jpg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE16.jpg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE17.jpg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE18.jpg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE19.jpg'],
+    dimensions: 'Top shelf: W 4" × L 20" × H 40"<br>Bottom shelf: W 4" × L 20" × H 30"', wood: 'Cedar', finish: 'Gloss White', custom: 'Custom dimensions available to fit your specific door.'
+  },
+  'thai-inspired-wood-chandelier': {
+    name: 'Thai-Inspired Wood Chandelier', tag: 'Lighting', price: 'From $825',
+    desc: 'A sculptural wood chandelier with a design rooted in Thai artistic tradition. The open lattice casts warm, patterned light and makes a dramatic statement in any room.',
+    photos: ['WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)1.jpg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)2.jpg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)3.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)4.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)5.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS1.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS2.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS3.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS4.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS7.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS8.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS10.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS11.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS13.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS17.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS18.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS19.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS22.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS24.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS26.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS27.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS28.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS29.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS30.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS31.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS32.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS33.jpeg','WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS34.jpeg'],
+    dimensions: '13" diameter × H 16"', wood: 'Poplar and Pine', finish: 'Wood Stain Dark Walnut', custom: 'Can be made to custom diameter and height. Custom wood species available.'
+  },
+  // Shop the collection products
+  'jewelry-box': {
+    name: 'Walnut & Ash Keepsake Box (Free Name Engraving)', tag: 'Gift', price: 'From $55',
+    desc: 'A handcrafted jewelry box made from dark walnut and ash. The perfect gift or a treat for yourself. Can be personalized with an engraved name or message on the lid.',
+    photos: ['JEWELRY BOX/JEWELRY BOX-COMPLETE/JEWELRY BOX-COMPLETE1.jpg','JEWELRY BOX/JEWELRY BOX-COMPLETE/JEWELRY BOX-COMPLETE2.jpg','JEWELRY BOX/JEWELRY BOX-COMPLETE/JEWELRY BOX-COMPLETE3.jpg','JEWELRY BOX/JEWELRY BOX-COMPLETE/JEWELRY BOX-COMPLETE4.jpg','JEWELRY BOX/JEWELRY BOX-COMPLETE/JEWELRY BOX-COMPLETE5.jpg','JEWELRY BOX/JEWELRY BOX-COMPLETE/JEWELRY BOX-COMPLETE6.jpg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS2.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS3.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS4.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS5.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS6.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS7.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS8.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS9.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS10.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS11.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS12.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS13.jpeg'],
+    dimensions: 'W 3⅜" × L 4½" × H 2"', wood: 'Dark Walnut & Ash', finish: 'Tung Oil', custom: 'Engrave a name, initials, or short message on the lid.',   },
+  'rustic-house-number-sign': {
+    name: 'Rustic House Number Sign', tag: 'Home', price: 'From $150',
+    desc: 'A fully handmade cedar house number sign with scroll saw cut-out numbers. Each one is made to order — built to your address and finished with lacquer for outdoor durability. Commission-based: reach out to get yours started.',
+    photos: ['RUSTIC HOUSE NUMBER SIGN/RUSTIC HOUSE NUMBER SIGN1.jpg','RUSTIC HOUSE NUMBER SIGN/RUSTIC HOUSE NUMBER SIGN2.jpg','RUSTIC HOUSE NUMBER SIGN/RUSTIC HOUSE NUMBER SIGN3.jpg','RUSTIC HOUSE NUMBER SIGN/RUSTIC HOUSE NUMBER SIGN4.jpg','RUSTIC HOUSE NUMBER SIGN/RUSTIC HOUSE NUMBER SIGN5.jpg','RUSTIC HOUSE NUMBER SIGN/RUSTIC HOUSE NUMBER SIGN6.jpg','RUSTIC HOUSE NUMBER SIGN/RUSTIC HOUSE NUMBER SIGN7.jpg'],
+    dimensions: 'W 13½" × H 18" × Thickness 2½"', wood: 'Cedar', finish: 'Lacquer', custom: 'Custom house numbers, dimensions available. Commission only — contact to order.'
+  },
+  'catch-all-tray-style-3': {
+    name: 'Hardwood Catch-all Tray (Style 3)', tag: 'Decor', price: '$45',
+    desc: 'A solid hardwood catch-all tray for your entryway or desk. Drop your keys, wallet, and daily carry in one spot — and actually find them when you leave.',
+    photos: ['Hardwood Catch-all Tray Style 3/Hardwood Catch-all Tray Style 31.jpg','Hardwood Catch-all Tray Style 3/Hardwood Catch-all Tray Style 32.jpg','Hardwood Catch-all Tray Style 3/Hardwood Catch-all Tray Style 33.jpg','Hardwood Catch-all Tray Style 3/Hardwood Catch-all Tray Style 34.jpg','Hardwood Catch-all Tray Style 3/Hardwood Catch-all Tray Style 35.jpg','Hardwood Catch-all Tray Style 3/Hardwood Catch-all Tray Style 36.jpg','Hardwood Catch-all Tray Style 3/Hardwood Catch-all Tray Style 37.jpg','Hardwood Catch-all Tray Style 3/Hardwood Catch-all Tray Style 38.jpg','Hardwood Catch-all Tray Style 3/Hardwood Catch-all Tray Style 39.jpg','Hardwood Catch-all Tray Style 3/Hardwood Catch-all Tray Style 40.jpg'],
+    dimensions: 'W 3¾" × L 7⅞" × H 1"', wood: 'Bolivian Coffee Wood (pictured), Walnut, or Maple', finish: 'Mineral Oil', custom: ''
+  },
+  'key-tray-style-2': {
+    name: 'Hardwood Catch-all Tray (Style 2)', tag: 'Decor', price: 'From $75',
+    desc: 'A carved wood catch-all tray for your entryway. Drop your keys, wallet, and daily carry in one spot — and actually find them when you leave.',
+    photos: ['KEY TRAY2/KEY TRAY2-COMPLETE/KEY TRAY2-COMPLETE2.jpg','KEY TRAY2/KEY TRAY2-COMPLETE/KEY TRAY2-COMPLETE1.jpg','KEY TRAY2/KEY TRAY2-COMPLETE/KEY TRAY2-COMPLETE3.jpg','KEY TRAY2/KEY TRAY2-COMPLETE/KEY TRAY2-COMPLETE4.jpg','KEY TRAY2/KEY TRAY2-COMPLETE/KEY TRAY2-COMPLETE5.jpg'],
+    dimensions: 'W 5½" × L 11½" × H 1¾"', wood: 'Walnut or Maple · African Padauk (pictured, sold out)', finish: 'Tung Oil', custom: 'Can be engraved with a name or short quote.'
+  },
+  'frame-key-holder': {
+    name: 'Hardwood Floating Picture Frame + Key Holder (Free Name Engraving)', tag: 'Home', price: '$55',
+    desc: 'A combination picture frame and key hook panel. Hang it by the door, display a photo and hang your keys in the same spot. Practical and personal.',
+    photos: ['FRAME-KEYS HOLDER/FRAME-KEYS HOLDER1.jpg','FRAME-KEYS HOLDER/FRAME-KEYS HOLDER2.jpg','FRAME-KEYS HOLDER/FRAME-KEYS HOLDER3.jpg','FRAME-KEYS HOLDER/FRAME-KEYS HOLDER4.jpg'],
+    dimensions: 'W 7" × L 7" × H ⅝"', wood: 'Dark Walnut, Maple, or Cherry', finish: 'Tung Oil', custom: 'Engrave a name, or make it a couples piece — two names side by side.'
+  },
+  'cutting-board-style-2': {
+    name: 'Mini End Grain Cutting Board (2" thick)', tag: 'Kitchen', price: 'From $65',
+    desc: 'A hardwood end grain cutting board with a striking wood pattern. Durable, gentle on knife edges, and beautiful enough to leave out on the counter.',
+    photos: ['CUTTING BOARD 2/CUTTING BOARD 2-COMPLETE/CUTTING BOARD 2-COMPLETE6.jpeg','CUTTING BOARD 2/CUTTING BOARD 2-COMPLETE/CUTTING BOARD 2-COMPLETE1.jpeg','CUTTING BOARD 2/CUTTING BOARD 2-COMPLETE/CUTTING BOARD 2-COMPLETE2.jpeg','CUTTING BOARD 2/CUTTING BOARD 2-COMPLETE/CUTTING BOARD 2-COMPLETE3.jpeg','CUTTING BOARD 2/CUTTING BOARD 2-COMPLETE/CUTTING BOARD 2-COMPLETE4.jpeg','CUTTING BOARD 2/CUTTING BOARD 2-COMPLETE/CUTTING BOARD 2-COMPLETE5.jpeg'],
+    dimensions: 'W 6¾" × L 9" × H 2"', wood: 'Dark Walnut & Maple', finish: 'Mineral Oil (food grade)', custom: 'Can be engraved with a name, monogram, or short message. Custom dimensions available.', video: 'CUTTING BOARD 2/CUTTING BOARD 2-PROCESS/CUTTING BOARD 2-PROCESS15.mov'
+  },
+  'planter-box': {
+    name: 'Plant Stand — Two Tiers', tag: 'Outdoor', price: 'From $125',
+    desc: 'A planter box built for indoor and outdoor use. Clean lines, sturdy construction, and sized to fit standard potting containers. Great for a porch, patio, or garden bed edge.',
+    photos: ['PLANTER BOX/PLANTER BOX6.jpeg','PLANTER BOX/PLANTER BOX1.jpeg','PLANTER BOX/PLANTER BOX2.jpeg','PLANTER BOX/PLANTER BOX3.jpeg','PLANTER BOX/PLANTER BOX4.jpeg','PLANTER BOX/PLANTER BOX5.jpeg','PLANTER BOX/PLANTER BOX7.jpeg'],
+    dimensions: 'W 9½" × L 48" × H 31"', wood: 'Poplar', finish: 'White Semi-Gloss', custom: 'Custom dimensions available.'
+  }
+};
+
+// ── Init ──────────────────────────────────────────────────────
+var _photos = [], _lbIdx = 0;
+
+function slugify(name) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
+function setVal(id, val, fallback) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  if (val) { el.innerHTML = val; el.classList.remove('tbd'); }
+  else { el.innerHTML = fallback || 'Coming soon'; el.classList.add('tbd'); }
+}
+
+function init() {
+  var params = new URLSearchParams(window.location.search);
+  var id = params.get('id');
+  var prod = LP_DETAILS[id];
+  if (!prod) { document.body.innerHTML = '<div style="padding:3rem;text-align:center;font-family:sans-serif;">Product not found. <a href="index.html">Back to collection</a></div>'; return; }
+
+  document.title = prod.name + ' — Loong Pete Garage Woodcraft';
+  _photos = prod.photos;
+
+  var backUrl = 'index.html#card-' + id;
+  document.querySelectorAll('a[href="index.html"]').forEach(function(a) { a.href = backUrl; });
+  document.querySelectorAll('button.lp-btn-secondary').forEach(function(b) { b.onclick = function() { window.location.href = backUrl; }; });
+
+  document.getElementById('lp-tag').textContent = prod.tag;
+  var nameParts = prod.name.match(/^(.*?)(\s*\(.*\))?$/);
+  document.getElementById('lp-name').innerHTML = nameParts[1] + (nameParts[2] ? '<span style="font-size:1.25rem;font-weight:400;color:#a07050;display:block;margin-top:4px;">' + nameParts[2].trim() + '</span>' : '');
+  document.getElementById('lp-price').textContent = prod.price;
+  document.getElementById('lp-desc').innerHTML = prod.desc;
+
+  setVal('spec-dimensions', prod.dimensions);
+  setVal('spec-wood', prod.wood);
+  setVal('spec-finish', prod.finish);
+  if (prod.includes) { document.getElementById('spec-includes').textContent = prod.includes; document.getElementById('spec-includes-row').style.display = 'flex'; }
+  setVal('spec-weight', prod.weight);
+  setVal('spec-ships', prod.ships);
+
+  var customEl = document.getElementById('lp-custom');
+  if (prod.custom) customEl.textContent = prod.custom;
+
+  // Main photo
+  document.getElementById('lp-main-img').src = _photos[0];
+  document.getElementById('lp-main-img').alt = prod.name;
+
+  // Thumbnails
+  var thumbWrap = document.getElementById('lp-thumbs');
+  _photos.forEach(function(src, i) {
+    var img = document.createElement('img');
+    img.src = src; img.className = 'lp-gallery-thumb' + (i === 0 ? ' active' : '');
+    img.onclick = function() { swapMain(src, i); };
+    thumbWrap.appendChild(img);
+  });
+
+  // Video thumbnail
+  if (prod.video) {
+    var vThumb = document.createElement('div');
+    vThumb.style.cssText = 'width:64px;height:50px;border-radius:8px;background:#d4a870;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;border:2px solid #b07040;gap:3px;';
+    vThumb.innerHTML = '<span style="font-size:16px;color:#1c0e04;">&#9654;</span><span style="font-size:8px;color:#1c0e04;font-family:sans-serif;font-weight:700;letter-spacing:0.05em;">VIDEO</span>';
+    vThumb.title = 'Play video';
+    vThumb.onclick = function() { vidOpen(prod.video); };
+    thumbWrap.appendChild(vThumb);
+  }
+}
+
+function swapMain(src, idx) {
+  document.getElementById('lp-main-img').src = src;
+  document.querySelectorAll('.lp-gallery-thumb').forEach(function(t, i) {
+    t.classList.toggle('active', i === idx);
+  });
+}
+
+function lbOpen(idx) { _lbIdx = idx; document.getElementById('lp-lb').style.display = 'flex'; document.getElementById('lp-lb-img').src = _photos[idx]; }
+function lbClose() { document.getElementById('lp-lb').style.display = 'none'; }
+function lbStep(dir) { _lbIdx = (_lbIdx + dir + _photos.length) % _photos.length; document.getElementById('lp-lb-img').src = _photos[_lbIdx]; }
+
+function vidOpen(src) { var v = document.getElementById('lp-vid-player'); v.src = src; v.volume = 0.2; document.getElementById('lp-vid-overlay').style.display = 'flex'; v.play(); }
+function vidClose() { var v = document.getElementById('lp-vid-player'); v.pause(); v.src = ''; document.getElementById('lp-vid-overlay').style.display = 'none'; }
+
+document.addEventListener('keydown', function(e) {
+  var lb = document.getElementById('lp-lb');
+  if (lb && lb.style.display !== 'none') {
+    if (e.key === 'Escape') lbClose();
+    if (e.key === 'ArrowRight') lbStep(1);
+    if (e.key === 'ArrowLeft') lbStep(-1);
+  }
+});
+
+function mailto() {
+  var name = document.getElementById('lp-name').textContent;
+  window.location.href = 'mailto:?subject=Inquiry: ' + encodeURIComponent(name) + ' — Loong Pete Garage Woodcraft';
+}
+
+init();
+
+var hamburger = document.getElementById('hamburger');
+var mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', function() { mobileMenu.classList.toggle('open'); });
+mobileMenu.querySelectorAll('a').forEach(function(link) {
+  link.addEventListener('click', function() { mobileMenu.classList.remove('open'); });
+});
+</script>
+</body>
+</html>

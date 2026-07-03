@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Loong Pete Garage Woodcraft</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --cream: #faf6f0;
+  --cream-dark: #f2ebe0;
+  --brown-deep: #1a0e04;
+  --brown-mid: #6b4226;
+  --brown-light: #a0673a;
+  --gold: #c8923c;
+  --gold-light: #e8b870;
+  --text: #1a0e04;
+  --text-muted: #7a5c40;
+  --border: rgba(160,103,58,0.15);
+}
+
+body { background: var(--cream); font-family: 'DM Sans', sans-serif; color: var(--text); -webkit-font-smoothing: antialiased; }
+
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: url('Black-Walnut-Wood.jpg') right top/cover no-repeat;
+  box-shadow: inset 0 0 0 9999px rgba(10,5,2,0.55);
+  border-bottom: 0.5px solid rgba(0,0,0,0.4);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem; height: 90px;
+}
+.nav-logo { font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #f5e8d0; }
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a { font-size: 12px; color: rgba(245,232,208,0.7); text-decoration: none; letter-spacing: 0.04em; }
+.nav-links a:hover { color: #f5e8d0; }
+.nav-cta { font-size: 12px; font-weight: 500; background: rgba(245,232,208,0.15); border: 0.5px solid rgba(245,232,208,0.35); color: #f5e8d0; padding: 8px 18px; border-radius: 100px; cursor: pointer; font-family: 'DM Sans', sans-serif; letter-spacing: 0.02em; }
+.nav-cta:hover { background: rgba(245,232,208,0.25); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 92vh;
+  display: flex; align-items: flex-end;
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+}
+.hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; }
+.hero-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(20,10,2,0.82) 0%, rgba(20,10,2,0.3) 45%, transparent 70%);
+}
+.hero-content {
+  position: relative; z-index: 2;
+  padding: 0 3rem 4rem;
+  max-width: 620px;
+}
+.hero-eyebrow { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #f5e8d0; margin-bottom: 1.1rem; font-weight: 600; }
+.hero-title { font-family: 'Outfit', sans-serif; font-size: clamp(2.6rem, 5vw, 4rem); font-weight: 300; color: #fff8f0; line-height: 1.08; margin-bottom: 1.1rem; letter-spacing: -0.02em; }
+.hero-title strong { font-weight: 700; }
+.hero-sub { font-size: 15px; color: rgba(245,232,208,0.75); line-height: 1.7; font-weight: 300; margin-bottom: 2rem; max-width: 440px; }
+.hero-actions { display: flex; gap: 12px; }
+.btn-primary { background: #fff8f0; color: var(--brown-deep); font-size: 13px; font-weight: 500; padding: 12px 24px; border-radius: 100px; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; letter-spacing: 0.01em; }
+.btn-outline { background: transparent; color: #fff8f0; font-size: 13px; font-weight: 400; padding: 12px 24px; border-radius: 100px; border: 1px solid rgba(255,248,240,0.35); cursor: pointer; font-family: 'DM Sans', sans-serif; }
+
+/* ── STATS STRIP ── */
+.stats { display: flex; background: var(--brown-deep); }
+.stat { flex: 1; padding: 1.5rem 2rem; border-right: 0.5px solid rgba(255,255,255,0.08); }
+.stat:last-child { border-right: none; }
+.stat-num { font-family: 'Outfit', sans-serif; font-size: 1.1rem; font-weight: 600; color: var(--gold-light); margin-bottom: 3px; }
+.stat-label { font-size: 11px; color: rgba(200,160,90,0.65); letter-spacing: 0.08em; text-transform: uppercase; }
+
+/* ── SECTIONS ── */
+.section { padding: 5rem 3rem; }
+.section-sm { padding: 3.5rem 3rem; }
+.eyebrow { font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.7rem; font-weight: 500; }
+.section-title { font-family: 'Outfit', sans-serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+.section-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2.5rem; }
+.section-link { font-size: 12px; color: var(--gold); letter-spacing: 0.06em; text-decoration: none; border-bottom: 0.5px solid var(--gold); padding-bottom: 1px; }
+
+/* ── SHOP GRID (5 cards) ── */
+.shop-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--border); border: 0.5px solid var(--border); border-radius: 18px; overflow: hidden; }
+.shop-card { background: var(--cream); cursor: pointer; transition: background 0.2s; }
+.shop-card:hover { background: var(--cream-dark); }
+.shop-card-img { aspect-ratio: 1/1; overflow: hidden; }
+.shop-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+.shop-card:hover .shop-card-img img { transform: scale(1.04); }
+.shop-card-body { padding: 1rem 1.1rem 1.2rem; }
+.shop-card-name { font-family: 'Outfit', sans-serif; font-size: 12.5px; font-weight: 600; color: var(--text); margin-bottom: 3px; line-height: 1.3; }
+.shop-card-tag { font-size: 10px; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+.shop-card-price { font-size: 12px; color: var(--gold); font-weight: 500; margin-top: 6px; }
+.shop-card-actions { display: flex; gap: 6px; margin-top: 10px; }
+.shop-btn { font-size: 10px; padding: 5px 10px; border-radius: 100px; cursor: pointer; font-family: 'DM Sans', sans-serif; letter-spacing: 0.02em; border: 0.5px solid var(--border); background: none; color: var(--brown-mid); }
+.shop-btn-primary { background: var(--brown-deep); color: #fff8f0; border-color: var(--brown-deep); }
+
+/* ── PRODUCT GRID (3 col, tall cards) ── */
+.product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.product-card { cursor: pointer; border-radius: 16px; overflow: hidden; background: var(--cream-dark); transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(26,14,4,0.12); }
+.product-card-img { aspect-ratio: 3/4; overflow: hidden; }
+.product-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+.product-card:hover .product-card-img img { transform: scale(1.04); }
+.product-card-body { padding: 1.1rem 1.25rem 1.4rem; }
+.product-card-tag { font-size: 10px; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 5px; }
+.product-card-name { font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 600; color: var(--text); line-height: 1.25; margin-bottom: 10px; }
+.product-card-action { display: flex; align-items: center; justify-content: space-between; }
+.product-card-photos { font-size: 10.5px; color: var(--text-muted); }
+.product-card-btn { font-size: 11px; color: var(--brown-mid); background: none; border: 0.5px solid var(--border); padding: 5px 14px; border-radius: 100px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.15s; }
+.product-card-btn:hover { background: var(--cream); }
+
+/* ── BEFORE/AFTER ── */
+.before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; border-radius: 18px; overflow: hidden; }
+.ba-panel { position: relative; aspect-ratio: 4/3; cursor: pointer; overflow: hidden; }
+.ba-panel img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+.ba-panel:hover img { transform: scale(1.03); }
+.ba-label { position: absolute; bottom: 16px; left: 16px; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #fff8f0; background: rgba(20,10,2,0.65); padding: 5px 14px; border-radius: 100px; backdrop-filter: blur(6px); }
+.ba-label.after { background: rgba(160,103,58,0.8); }
+
+/* ── FEATURE STRIP (name story) ── */
+.name-strip { background: var(--cream-dark); padding: 2.5rem 3rem; display: flex; align-items: center; gap: 3rem; border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); }
+.name-strip-label { font-family: 'Outfit', sans-serif; font-size: 9px; font-weight: 700; color: var(--brown-light); letter-spacing: 0.22em; text-transform: uppercase; flex-shrink: 0; writing-mode: vertical-rl; transform: rotate(180deg); }
+.name-strip-text { font-size: 16px; color: var(--brown-mid); line-height: 1.7; font-weight: 300; max-width: 700px; }
+.name-strip-text strong { color: var(--brown-deep); font-weight: 600; }
+
+/* ── IN THE GARAGE ── */
+.garage-wrap { display: grid; grid-template-columns: 1fr 320px; gap: 1.5rem; align-items: start; }
+.garage-main { border-radius: 16px; overflow: hidden; aspect-ratio: 4/3; cursor: pointer; position: relative; }
+.garage-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.garage-badge { position: absolute; bottom: 14px; left: 14px; background: rgba(20,10,2,0.72); color: #f5e8d0; font-family: 'Outfit', sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 14px; border-radius: 100px; backdrop-filter: blur(4px); }
+.garage-thumbs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.garage-thumb { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; cursor: pointer; opacity: 0.55; border: 2px solid transparent; transition: opacity 0.15s; }
+.garage-thumb:hover { opacity: 0.85; }
+.garage-thumb.active { opacity: 1; border-color: var(--gold); }
+
+/* ── COMMISSION ── */
+.commission { background: url('Black-Walnut-Wood.jpg') left bottom/cover no-repeat; box-shadow: inset 0 0 0 9999px rgba(10,5,2,0.6); border-radius: 20px; padding: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+.commission-eyebrow { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+.commission-title { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 600; color: #f5e8d0; line-height: 1.2; margin-bottom: 0.9rem; }
+.commission-desc { font-size: 13.5px; color: #e8d5b8; line-height: 1.7; font-weight: 300; margin-bottom: 1.5rem; }
+.btn-cream { background: #f5e8d0; color: var(--brown-deep); font-size: 13px; font-weight: 500; padding: 12px 24px; border-radius: 100px; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; }
+.steps { display: flex; flex-direction: column; gap: 1rem; }
+.step { display: flex; gap: 14px; align-items: flex-start; }
+.step-num { width: 24px; height: 24px; border-radius: 50%; border: 0.5px solid rgba(245,232,208,0.5); color: #f5e8d0; font-size: 11px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-weight: 500; margin-top: 1px; }
+.step-text { font-size: 13px; color: #e8d5b8; line-height: 1.55; font-weight: 300; }
+.step-text strong { color: #f5e8d0; font-weight: 600; }
+
+/* ── FOOTER ── */
+footer { background: url('Black-Walnut-Wood.jpg') right top/cover no-repeat; box-shadow: inset 0 0 0 9999px rgba(10,5,2,0.55); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; }
+.footer-brand { font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #f5e8d0; }
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a { font-size: 11px; color: rgba(245,232,208,0.65); text-decoration: none; letter-spacing: 0.04em; }
+.footer-links a:hover { color: #f5e8d0; }
+.footer-copy { font-size: 11px; color: rgba(245,232,208,0.5); }
+
+/* ── LIGHTBOX ── */
+#lp-lb { display:none; position:fixed; inset:0; background:rgba(8,3,0,0.93); z-index:1100; align-items:center; justify-content:center; flex-direction:column; gap:12px; }
+#lp-lb img { max-height:82vh; max-width:90vw; border-radius:8px; object-fit:contain; }
+#lp-lb-close { position:absolute; top:20px; right:24px; background:none; border:none; color:#f5e8d0; font-size:22px; cursor:pointer; }
+.lb-nav { display:flex; gap:10px; }
+.lb-nav button { background:rgba(255,255,255,0.1); border:none; color:#f5e8d0; font-size:18px; width:40px; height:40px; border-radius:50%; cursor:pointer; }
+.lb-nav button:hover { background:rgba(255,255,255,0.2); }
+#lp-lb-title { font-family:'Outfit',sans-serif; font-size:11px; color:var(--gold-light); letter-spacing:0.12em; text-transform:uppercase; }
+.lb-thumbs { display:flex; gap:6px; flex-wrap:wrap; justify-content:center; max-width:90vw; }
+.lb-thumb { width:52px; height:40px; object-fit:cover; border-radius:4px; cursor:pointer; opacity:0.45; border:1.5px solid transparent; transition:opacity 0.15s; }
+.lb-thumb.active { opacity:1; border-color:var(--gold); }
+
+/* ── MOBILE ── */
+@media (max-width:700px) {
+  nav { padding: 0 1.25rem; }
+  .nav-links { display: none; }
+  .nav-cta { display: none; }
+  .hero-content { padding: 0 1.25rem 3rem; }
+  .hero-title { font-size: 2.3rem; }
+  .stats { flex-direction: column; }
+  .stat { border-right: none; border-bottom: 0.5px solid rgba(255,255,255,0.08); padding: 1rem 1.5rem; }
+  .section, .section-sm { padding: 3rem 1.25rem; }
+  .shop-grid { grid-template-columns: repeat(2, 1fr); }
+  .product-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .product-card-img { aspect-ratio: 4/3; }
+  .before-after { grid-template-columns: 1fr; }
+  .name-strip { flex-direction: column; gap: 1rem; padding: 2rem 1.25rem; }
+  .name-strip-label { writing-mode: horizontal-tb; transform: none; }
+  .garage-wrap { grid-template-columns: 1fr; }
+  .garage-thumbs { grid-template-columns: repeat(4, 1fr); }
+  .commission { grid-template-columns: 1fr; padding: 2rem 1.5rem; gap: 2rem; }
+  footer { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1.5rem 1.25rem; }
+  nav { height: 72px; padding: 0 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" style="display:flex;align-items:center;gap:14px;text-decoration:none;">
+    <img src="loong-pete-logo-transparent.png" alt="Loong Pete Garage Woodcraft" style="height:88px;width:auto;" />
+    <span style="font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#f5e8d0;line-height:1.4;">Loong Pete<br>Garage Woodcraft</span>
+  </a>
+  <div class="nav-links">
+    <a href="#">Shop</a>
+    <a href="#">Collection</a>
+    <a href="#">Commissions</a>
+    <a href="#">About</a>
+  </div>
+  <button class="nav-cta">Shop on Etsy ↗</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <img src="WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)1.JPG" alt="Thai-Inspired Chandelier" />
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Handcrafted in San Antonio, TX</div>
+    <h1 class="hero-title">Wood made<br><strong>with intention.</strong></h1>
+    <p class="hero-sub">From sculptural lighting and hardwood serving trays to custom frames and giftable accessories, each piece is shaped in solid wood, made in small batches, and finished by hand in my garage, with care and a little sawdust.</p>
+    <div class="hero-actions">
+      <button class="btn-primary">Shop the collection</button>
+      <button class="btn-outline">Commission a piece</button>
+    </div>
+  </div>
+</section>
+
+<!-- NAME STRIP -->
+<div class="name-strip">
+  <div class="name-strip-label">The name</div>
+  <p class="name-strip-text">Loong Pete is what my friends' children call me — <strong>Thai for Uncle Pete.</strong> It's a name rooted in warmth, familiarity, and care, and that same spirit goes into every piece I make.</p>
+</div>
+
+<!-- FEATURED WORK: SINGHA -->
+<section class="section-sm" style="background:url('Black-Walnut-Wood.jpg') center/cover no-repeat;box-shadow:inset 0 0 0 9999px rgba(10,5,2,0.65);">
+  <div class="section-head" style="margin-bottom:2rem;">
+    <div>
+      <div class="eyebrow" style="color:var(--gold);">Featured work</div>
+      <div class="section-title" style="color:#f5e8d0;">The Singha sculpture</div>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:center;">
+    <div style="position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/3;cursor:pointer;" onclick="lbOpen(_sgImgs,'Singha Sculpture',0)">
+      <img src="SINGHA- HOMEPAGE-BRANDING/SINGHA-COMPLETE/SINGHA-COMPLETE14 copy.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Singha sculpture" />
+      <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(20,10,2,0.5) 0%,transparent 50%);"></div>
+    </div>
+    <div>
+      <p style="font-size:15px;color:#e8d5b8;line-height:1.75;font-weight:300;margin-bottom:1.5rem;">The Thai mythical lion in my logo isn't just a symbol — I carved it myself from segmented walnut and maple blocks, shaped by hand in my garage. It's why the Singha is my mark.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button onclick="lbOpen(_sgImgs,'Singha Sculpture',0)" style="font-size:12px;padding:9px 20px;border-radius:100px;border:0.5px solid rgba(200,160,90,0.4);background:none;color:#f5e8d0;cursor:pointer;font-family:'DM Sans',sans-serif;">View gallery ↗</button>
+        <button onclick="lbOpen(_procImgs,'Making of the Singha',0)" style="font-size:12px;padding:9px 20px;border-radius:100px;border:0.5px solid rgba(200,160,90,0.2);background:none;color:rgba(200,160,90,0.65);cursor:pointer;font-family:'DM Sans',sans-serif;">Making of ↗</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP THE COLLECTION -->
+<section class="section-sm">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">Ready to ship</div>
+      <div class="section-title">Shop the collection</div>
+    </div>
+    <a class="section-link" href="https://etsy.com/shop/YOUR-SHOP-NAME" target="_blank">Shop on Etsy ↗</a>
+  </div>
+  <div class="shop-grid" id="shop-grid"></div>
+</section>
+
+<!-- MORE FROM THE WORKSHOP -->
+<section class="section" style="background: #ffffff;">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">The full collection</div>
+      <div class="section-title">More from the workshop</div>
+    </div>
+  </div>
+  <div class="product-grid" id="product-grid"></div>
+</section>
+
+<!-- PANTRY PROJECT SPOTLIGHT -->
+<section class="section-sm">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">Project spotlight</div>
+      <div class="section-title">One weekend. Five builds. One pantry.</div>
+    </div>
+  </div>
+  <div class="before-after" style="margin-bottom:1.25rem;">
+    <div class="ba-panel" onclick="lbOpen(['PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-before/PANTRY ROOM UPGRADE-BEFORE1.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-before/PANTRY ROOM UPGRADE-BEFORE2.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-before/PANTRY ROOM UPGRADE-BEFORE3.jpeg'],'Before',0)">
+      <img src="PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-before/PANTRY ROOM UPGRADE-BEFORE1.jpeg" alt="Before" />
+      <div class="ba-label">Before</div>
+    </div>
+    <div class="ba-panel" onclick="lbOpen(['PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-after/PANTRY ROOM UPGRADE-AFTER1.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-after/PANTRY ROOM UPGRADE-AFTER2.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-after/PANTRY ROOM UPGRADE-AFTER3.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-after/PANTRY ROOM UPGRADE-AFTER4.jpeg'],'After',0)">
+      <img src="PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-after/PANTRY ROOM UPGRADE-AFTER1.jpeg" alt="After" />
+      <div class="ba-label after">After</div>
+    </div>
+  </div>
+  <p style="font-size:13.5px;color:var(--text-muted);line-height:1.7;font-weight:300;max-width:640px;">Built five custom wood pieces to transform a cluttered pantry into an organized, functional space. All designed and sized to fit the exact dimensions of the room.</p>
+</section>
+
+<!-- IN THE GARAGE -->
+<section class="section-sm" style="background:var(--cream-dark);">
+  <div class="section-head">
+    <div>
+      <div class="eyebrow">Work in progress</div>
+      <div class="section-title">In the Garage</div>
+    </div>
+  </div>
+  <div class="garage-wrap">
+    <div class="garage-main" onclick="lbOpen(_garageImgs,'Dining Chair — In Progress',0)">
+      <img id="garage-main-img" src="DINNING CHAIR/DINING CHAIR (IN PROGRESS)13.JPG" alt="Dining Chair in progress" />
+      <div class="garage-badge">Dining Chair — In Progress</div>
+    </div>
+    <div class="garage-thumbs" id="garage-thumbs"></div>
+  </div>
+</section>
+
+<!-- COMMISSION -->
+<section class="section">
+  <div class="commission">
+    <div>
+      <div class="commission-eyebrow">Custom work</div>
+      <div class="commission-title">Have something in mind?</div>
+      <p class="commission-desc">I take custom commissions for furniture, storage, frames, and more. Send me the dimensions, your wood preference, and any details — I'll build it.</p>
+      <button class="btn-cream">Start a conversation</button>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-text"><strong>Share your idea</strong> — describe the piece, size, and how you plan to use it</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-text"><strong>We align on the plan</strong> — wood species, finish, timeline, and price</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-text"><strong>I build it</strong> — you get photos along the way and a finished piece built just for you</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT PETE -->
+<section style="background:var(--cream-dark);padding:5rem 3rem;">
+  <div style="max-width:1000px;margin:0 auto;">
+    <div style="margin-bottom:2.5rem;">
+      <div class="eyebrow">The Maker</div>
+      <h2 style="font-family:'Outfit',sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--brown-deep);line-height:1.2;margin:0.5rem 0 0;">About Pete</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:3rem;align-items:center;">
+      <div style="border-radius:16px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;" onclick="lbOpen(_birdImgs,'The Birdhouse Project',0)">
+        <img src="BIRDHOUSE/BIRDHOUSE7.jpeg" style="width:100%;height:100%;object-fit:cover;" alt="Birdhouse" />
+      </div>
+      <div>
+        <p style="font-size:15px;font-weight:600;color:var(--brown-deep);margin:0 0 0.75rem;">It started with a birdhouse and my daughters.</p>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.8;margin:0 0 2rem;">About five years ago, I built a birdhouse with my daughters and discovered something I didn't want to stop doing. Since then, woodworking has grown from curiosity into craft. I'm self-taught, workshop-based, and always learning — making everything from small boxes to larger statement pieces by hand, one build at a time.</p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;"><button onclick="lbOpen(_birdImgs,'The Birdhouse Project',0)" style="font-size:12px;padding:9px 20px;border-radius:100px;border:0.5px solid var(--border);background:none;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif;">View gallery →</button><button onclick="document.getElementById('bh-video-player').src='BIRDHOUSE/BIRDHOUSE6.mov';document.getElementById('bh-video').style.display='flex'" style="font-size:12px;padding:9px 20px;border-radius:100px;border:0.5px solid var(--border);background:none;color:var(--text-muted);cursor:pointer;font-family:'DM Sans',sans-serif;">▶ Watch video</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BIRDHOUSE VIDEO OVERLAY -->
+<div id="bh-video" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;" onclick="if(event.target===this){document.getElementById('bh-video-player').pause();document.getElementById('bh-video-player').src='';this.style.display='none'}">
+  <button onclick="document.getElementById('bh-video-player').pause();document.getElementById('bh-video-player').src='';document.getElementById('bh-video').style.display='none'" style="position:absolute;top:1.5rem;right:1.5rem;background:rgba(255,255,255,0.1);border:none;color:#f5e8d0;font-size:22px;width:44px;height:44px;border-radius:50%;cursor:pointer;">✕</button>
+  <video id="bh-video-player" src="" controls style="max-width:90vw;max-height:85vh;border-radius:12px;"></video>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <img src="loong-pete-logo-transparent.png" style="height:52px;width:auto;" alt="Loong Pete" />
+    <div class="footer-brand">Loong Pete<br>Garage Woodcraft</div>
+  </div>
+  <div class="footer-links">
+    <a href="#">Shop</a>
+    <a href="#">Commissions</a>
+    <a href="#">About</a>
+    <a href="https://etsy.com/shop/YOUR-SHOP-NAME" target="_blank">Etsy</a>
+  </div>
+  <div class="footer-copy">© 2025 Loong Pete Garage Woodcraft</div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div id="lp-lb" onclick="if(event.target===this)lbClose();">
+  <button id="lp-lb-close" onclick="lbClose()">&#x2715;</button>
+  <div id="lp-lb-title"></div>
+  <img id="lp-lb-img" src="" alt="" />
+  <div class="lb-nav">
+    <button onclick="lbStep(-1)">&#8592;</button>
+    <button onclick="lbStep(1)">&#8594;</button>
+  </div>
+  <div class="lb-thumbs" id="lp-lb-thumbs"></div>
+</div>
+
+<!-- MOBILE DETAIL MODAL -->
+<div id="lp-detail-modal" style="display:none;position:fixed;inset:0;z-index:1200;background:rgba(8,3,0,0.5);align-items:flex-end;justify-content:center;">
+  <div style="background:var(--cream);width:100%;height:92vh;border-radius:20px 20px 0 0;overflow:hidden;display:flex;flex-direction:column;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:0.5px solid var(--border);flex-shrink:0;">
+      <span style="font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;">Product Details</span>
+      <button onclick="lpCloseDetailModal()" style="background:none;border:none;font-size:22px;color:var(--text-muted);cursor:pointer;">&#x2715;</button>
+    </div>
+    <iframe id="lp-detail-frame" src="" style="flex:1;border:none;width:100%;"></iframe>
+  </div>
+</div>
+
+<script>
+// ── Birdhouse photos ─────────────────────────────────────────
+var _birdImgs = ["BIRDHOUSE/BIRDHOUSE1.jpeg","BIRDHOUSE/BIRDHOUSE2.jpeg","BIRDHOUSE/BIRDHOUSE3.jpeg","BIRDHOUSE/BIRDHOUSE4.jpeg","BIRDHOUSE/BIRDHOUSE5.jpeg","BIRDHOUSE/BIRDHOUSE7.jpeg","BIRDHOUSE/BIRDHOUSE8.jpeg"];
+
+// ── Singha photos ────────────────────────────────────────────
+var _sgImgs = ["SINGHA- HOMEPAGE-BRANDING/SINGHA-COMPLETE/SINGHA-COMPLETE1 copy.jpg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-COMPLETE/SINGHA-COMPLETE2 copy.jpg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-COMPLETE/SINGHA-COMPLETE3 copy.jpg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-COMPLETE/SINGHA-COMPLETE4 copy.jpg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-COMPLETE/SINGHA-COMPLETE6 copy.jpg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-COMPLETE/SINGHA-COMPLETE7 copy.jpg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-COMPLETE/SINGHA-COMPLETE9 copy.jpg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-COMPLETE/SINGHA-COMPLETE10 copy.jpg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-COMPLETE/SINGHA-COMPLETE11 copy.jpg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-COMPLETE/SINGHA-COMPLETE13 copy.jpg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-COMPLETE/SINGHA-COMPLETE14 copy.jpg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-COMPLETE/SINGHA-COMPLETE16 copy.jpg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-COMPLETE/SINGHA-COMPLETE19 copy.jpg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-COMPLETE/SINGHA-COMPLETE20 copy.jpg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-COMPLETE/SINGHA-COMPLETE22 copy.jpg"];
+var _procImgs = ["SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS1.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS2.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS3.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS4.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS5.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS6.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS7.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS8.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS9.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS10.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS11.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS12.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS13.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS14.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS15.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS16.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS17.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS18.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS19.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS20.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS21.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS22.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS23.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS24.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS25.jpeg", "SINGHA- HOMEPAGE-BRANDING/SINGHA-PROCESS/SINGHA-PROCESS26.jpeg"];
+
+// ── Product data ──────────────────────────────────────────────
+var LP_SHOP = [
+  { name:'Jewelry Box', tag:'Gift', price:'From $85', slug:'jewelry-box', photos:['JEWELRY BOX/JEWELRY BOX-COMPLETE/JEWELRY BOX-COMPLETE1.JPG', 'JEWELRY BOX/JEWELRY BOX-COMPLETE/JEWELRY BOX-COMPLETE2.JPG', 'JEWELRY BOX/JEWELRY BOX-COMPLETE/JEWELRY BOX-COMPLETE3.JPG', 'JEWELRY BOX/JEWELRY BOX-COMPLETE/JEWELRY BOX-COMPLETE4.JPG', 'JEWELRY BOX/JEWELRY BOX-COMPLETE/JEWELRY BOX-COMPLETE5.JPG', 'JEWELRY BOX/JEWELRY BOX-COMPLETE/JEWELRY BOX-COMPLETE6.JPG', 'JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS2.jpeg', 'JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS3.jpeg', 'JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS4.jpeg', 'JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS5.jpeg', 'JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS6.jpeg', 'JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS7.jpeg', 'JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS8.jpeg', 'JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS9.jpeg', 'JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS10.jpeg', 'JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS11.jpeg', 'JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS12.jpeg', 'JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS13.jpeg'] },
+  { name:'Key Tray — Style 2', tag:'Decor', price:'From $65', slug:'key-tray-style-2', photos:['KEY TRAY2/KEY TRAY2-COMPLETE/KEY TRAY2-COMPLETE2.JPG', 'KEY TRAY2/KEY TRAY2-COMPLETE/KEY TRAY2-COMPLETE1.jpg', 'KEY TRAY2/KEY TRAY2-COMPLETE/KEY TRAY2-COMPLETE3.jpg', 'KEY TRAY2/KEY TRAY2-COMPLETE/KEY TRAY2-COMPLETE4.jpg', 'KEY TRAY2/KEY TRAY2-COMPLETE/KEY TRAY2-COMPLETE5.JPG', 'KEY TRAY2/KEY TRAY2-PROCESS/KEY TRAY2-PROCESS1.jpeg', 'KEY TRAY2/KEY TRAY2-PROCESS/KEY TRAY2-PROCESS2.jpeg', 'KEY TRAY2/KEY TRAY2-PROCESS/KEY TRAY2-PROCESS3.jpeg', 'KEY TRAY2/KEY TRAY2-PROCESS/KEY TRAY2-PROCESS4.jpeg', 'KEY TRAY2/KEY TRAY2-PROCESS/KEY TRAY2-PROCESS5.jpeg', 'KEY TRAY2/KEY TRAY2-PROCESS/KEY TRAY2-PROCESS6.jpeg', 'KEY TRAY2/KEY TRAY2-PROCESS/KEY TRAY2-PROCESS7.jpeg', 'KEY TRAY2/KEY TRAY2-PROCESS/KEY TRAY2-PROCESS8.jpeg'] },
+  { name:'Frame + Key Holder', tag:'Home', price:'From $55', slug:'frame-key-holder',
+    photos:['FRAME+KEYS HOLDER/FRAME+KEYS HOLDER1.JPG','FRAME+KEYS HOLDER/FRAME+KEYS HOLDER2.JPG','FRAME+KEYS HOLDER/FRAME+KEYS HOLDER3.JPG','FRAME+KEYS HOLDER/FRAME+KEYS HOLDER4.JPG'] },
+  { name:'End Grain Cutting Board — Style 2', tag:'Kitchen', price:'From $75', slug:'cutting-board-style-2', photos:['CUTTING BOARD 2/CUTTING BOARD 2-COMPLETE/CUTTING BOARD 2-COMPLETE6.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-COMPLETE/CUTTING BOARD 2-COMPLETE1.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-COMPLETE/CUTTING BOARD 2-COMPLETE2.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-COMPLETE/CUTTING BOARD 2-COMPLETE3.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-COMPLETE/CUTTING BOARD 2-COMPLETE4.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-COMPLETE/CUTTING BOARD 2-COMPLETE5.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-PROCESS/CUTTING BOARD 2-PROCESS1.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-PROCESS/CUTTING BOARD 2-PROCESS2.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-PROCESS/CUTTING BOARD 2-PROCESS3.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-PROCESS/CUTTING BOARD 2-PROCESS4.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-PROCESS/CUTTING BOARD 2-PROCESS5.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-PROCESS/CUTTING BOARD 2-PROCESS6.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-PROCESS/CUTTING BOARD 2-PROCESS7.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-PROCESS/CUTTING BOARD 2-PROCESS8.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-PROCESS/CUTTING BOARD 2-PROCESS9.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-PROCESS/CUTTING BOARD 2-PROCESS10.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-PROCESS/CUTTING BOARD 2-PROCESS11.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-PROCESS/CUTTING BOARD 2-PROCESS12.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-PROCESS/CUTTING BOARD 2-PROCESS13.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-PROCESS/CUTTING BOARD 2-PROCESS14.jpeg', 'CUTTING BOARD 2/CUTTING BOARD 2-PROCESS/CUTTING BOARD 2-PROCESS16.jpeg'] },
+  { name:'Planter Box', tag:'Outdoor', price:'From $90', slug:'planter-box',
+    photos:['PLANTER BOX/PLANTER BOX6.jpeg','PLANTER BOX/PLANTER BOX1.jpeg','PLANTER BOX/PLANTER BOX2.jpeg','PLANTER BOX/PLANTER BOX3.jpeg','PLANTER BOX/PLANTER BOX4.jpeg','PLANTER BOX/PLANTER BOX5.jpeg','PLANTER BOX/PLANTER BOX7.jpeg'] },
+];
+
+var LP_PRODUCTS = [
+  { name:'Adirondack Chair with Side Table', tag:'Furniture', slug:'adirondak-chair', photos:['ADIRONDAK CHAIR/ADIRONDAK CHAIR-COMPLETE/ADIRONDAK CHAIR-COMPLETE1.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-COMPLETE/ADIRONDAK CHAIR-COMPLETE2.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-COMPLETE/ADIRONDAK CHAIR-COMPLETE3.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-COMPLETE/ADIRONDAK CHAIR-COMPLETE4.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-COMPLETE/ADIRONDAK CHAIR-COMPLETE5.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-PROCESS/ADIRONDAK CHAIR-PROCESS1.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-PROCESS/ADIRONDAK CHAIR-PROCESS2.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-PROCESS/ADIRONDAK CHAIR-PROCESS3.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-PROCESS/ADIRONDAK CHAIR-PROCESS4.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-PROCESS/ADIRONDAK CHAIR-PROCESS5.jpeg','ADIRONDAK CHAIR/ADIRONDAK CHAIR-PROCESS/ADIRONDAK CHAIR-PROCESS6.jpeg'] },
+  { name:'Japanese-Inspired Bench', tag:'Furniture', slug:'japanese-inspired-bench', photos:['BENCH (JAPANESE ART INSPIRED)/BENCH (JAPANESE ART INSPIRED)/BENCH (JAPANESE ART INSPIRED)5.jpeg','BENCH (JAPANESE ART INSPIRED)/BENCH (JAPANESE ART INSPIRED)/BENCH (JAPANESE ART INSPIRED)1.jpeg','BENCH (JAPANESE ART INSPIRED)/BENCH (JAPANESE ART INSPIRED)/BENCH (JAPANESE ART INSPIRED)3.jpeg','BENCH (JAPANESE ART INSPIRED)/BENCH (JAPANESE ART INSPIRED)/BENCH (JAPANESE ART INSPIRED)6.jpeg'] },
+  { name:'College Pennant Frame', tag:'Decor', slug:'college-pennant-frame', photos:['COLLEGE PENNANT FRAME/COLLEGE PENNANT FRAME/COLLEGE PENNANT FRAME2.jpeg','COLLEGE PENNANT FRAME/COLLEGE PENNANT FRAME/COLLEGE PENNANT FRAME1.jpeg','COLLEGE PENNANT FRAME/COLLEGE PENNANT FRAME/COLLEGE PENNANT FRAME3.jpeg','COLLEGE PENNANT FRAME/COLLEGE PENNANT FRAME-PROCESS/COLLEGE PENNANT FRAME-PROCESS1.jpeg','COLLEGE PENNANT FRAME/COLLEGE PENNANT FRAME-PROCESS/COLLEGE PENNANT FRAME-PROCESS2.jpeg','COLLEGE PENNANT FRAME/COLLEGE PENNANT FRAME-PROCESS/COLLEGE PENNANT FRAME-PROCESS3.jpeg'] },
+  { name:'End Grain Cutting Board — Style 1', tag:'Kitchen', slug:'cutting-board-style-1', photos:['CUTTING BOARD 1/CUTTING BOARD 1-COMPLETE/CUTTING BOARD 1-COMPLETE1.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-COMPLETE/CUTTING BOARD 1-COMPLETE2.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-COMPLETE/CUTTING BOARD 1-COMPLETE3.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-COMPLETE/CUTTING BOARD 1-COMPLETE4.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-PROCESS/CUTTING BOARD 1-PROCESS1.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-PROCESS/CUTTING BOARD 1-PROCESS2.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-PROCESS/CUTTING BOARD 1-PROCESS3.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-PROCESS/CUTTING BOARD 1-PROCESS4.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-PROCESS/CUTTING BOARD 1-PROCESS5.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-PROCESS/CUTTING BOARD 1-PROCESS6.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-PROCESS/CUTTING BOARD 1-PROCESS7.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-PROCESS/CUTTING BOARD 1-PROCESS8.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-PROCESS/CUTTING BOARD 1-PROCESS9.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-PROCESS/CUTTING BOARD 1-PROCESS10.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-PROCESS/CUTTING BOARD 1-PROCESS11.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-PROCESS/CUTTING BOARD 1-PROCESS12.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-PROCESS/CUTTING BOARD 1-PROCESS13.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-PROCESS/CUTTING BOARD 1-PROCESS14.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-PROCESS/CUTTING BOARD 1-PROCESS15.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-PROCESS/CUTTING BOARD 1-PROCESS16.jpeg','CUTTING BOARD 1/CUTTING BOARD 1-PROCESS/CUTTING BOARD 1-PROCESS17.jpeg'] },
+  { name:'Serving Tray', tag:'Kitchen', slug:'serving-tray', photos:['TRAY/TRAY-COMPLETE/TRAY-COMPLETE2.jpeg','TRAY/TRAY-COMPLETE/TRAY-COMPLETE3.jpeg','TRAY/TRAY-COMPLETE/TRAY-COMPLETE4.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS1.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS2.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS3.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS4.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS5.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS6.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS7.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS8.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS9.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS10.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS11.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS12.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS13.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS15.jpeg','TRAY/TRAY-PROCESS/TRAY-PROCESS16.jpeg'] },
+  { name:'Hardwood Figurine', tag:'Decor', slug:'hardwood-figurine', photos:['HANDCRAFTED HARDWOOD FIGURINE/HANDCRAFTED HARDWOOD FIGURINE1.JPG','HANDCRAFTED HARDWOOD FIGURINE/HANDCRAFTED HARDWOOD FIGURINE2.JPG','HANDCRAFTED HARDWOOD FIGURINE/HANDCRAFTED HARDWOOD FIGURINE3.JPG','HANDCRAFTED HARDWOOD FIGURINE/HANDCRAFTED HARDWOOD FIGURINE4.JPG'] },
+  { name:'Key Tray — Style 1', tag:'Decor', slug:'key-tray-gigi', coverPos:'center 60%', coverScale:1.4, photos:['KEY TRAY1-GIGI/IMG_9743.jpeg','KEY TRAY1-GIGI/IMG_9744.jpeg','KEY TRAY1-GIGI/IMG_9745.jpeg'] },
+  { name:'Pen Holder', tag:'Desk', slug:'pen-holder', photos:['PEN HOLDER/PEN HOLDER-COMPLETE/PEN HOLDER-COMPLETE1.JPG','PEN HOLDER/PEN HOLDER-COMPLETE/PEN HOLDER-COMPLETE2.JPG','PEN HOLDER/PEN HOLDER-COMPLETE/PEN HOLDER-COMPLETE3.JPG','PEN HOLDER/PEN HOLDER-COMPLETE/PEN HOLDER-COMPLETE4.JPG','PEN HOLDER/PEN HOLDER-COMPLETE/PEN HOLDER-COMPLETE5.JPG','PEN HOLDER/PEN HOLDER-COMPLETE/PEN HOLDER-COMPLETE6.JPG','PEN HOLDER/PEN HOLDER-PROCESS/PEN HOLDER-PROCESS1.jpeg','PEN HOLDER/PEN HOLDER-PROCESS/PEN HOLDER-PROCESS2.jpeg','PEN HOLDER/PEN HOLDER-PROCESS/PEN HOLDER-PROCESS3.jpeg','PEN HOLDER/PEN HOLDER-PROCESS/PEN HOLDER-PROCESS4.jpeg','PEN HOLDER/PEN HOLDER-PROCESS/PEN HOLDER-PROCESS5.jpeg','PEN HOLDER/PEN HOLDER-PROCESS/PEN HOLDER-PROCESS6.jpeg','PEN HOLDER/PEN HOLDER-PROCESS/PEN HOLDER-PROCESS7.jpeg','PEN HOLDER/PEN HOLDER-PROCESS/PEN HOLDER-PROCESS8.jpeg','PEN HOLDER/PEN HOLDER-PROCESS/PEN HOLDER-PROCESS9.jpeg','PEN HOLDER/PEN HOLDER-PROCESS/PEN HOLDER-PROCESS10.jpeg','PEN HOLDER/PEN HOLDER-PROCESS/PEN HOLDER-PROCESS11.jpeg'] },
+  { name:'Phone Charger Organizer', tag:'Desk', slug:'phone-charger-organizer', photos:['PHONE CHARGER ORGANIZER BOX/PHONE CHARGER ORGANIZER BOX-COMPLETE/PHONE CHARGER ORGANIZER BOX-COMPLETE1.JPG','PHONE CHARGER ORGANIZER BOX/PHONE CHARGER ORGANIZER BOX-COMPLETE/PHONE CHARGER ORGANIZER BOX-COMPLETE2.JPG','PHONE CHARGER ORGANIZER BOX/PHONE CHARGER ORGANIZER BOX-COMPLETE/PHONE CHARGER ORGANIZER BOX-COMPLETE3.JPG','PHONE CHARGER ORGANIZER BOX/PHONE CHARGER ORGANIZER BOX-COMPLETE/PHONE CHARGER ORGANIZER BOX-COMPLETE4.JPG','PHONE CHARGER ORGANIZER BOX/PHONE CHARGER ORGANIZER BOX-PROCESS/PHONE CHARGER ORGANIZER BOX-PROCESS1.jpeg','PHONE CHARGER ORGANIZER BOX/PHONE CHARGER ORGANIZER BOX-PROCESS/PHONE CHARGER ORGANIZER BOX-PROCESS2.jpeg'] },
+  { name:'Phone Stand — Style 2', tag:'Desk', slug:'phone-stand-style-2', coverPos:'center 20%', photos:['PHONE STAND 2/PHONE STAND 2-COMPLETE/PHONE STAND 2-COMPLETE1.jpeg','PHONE STAND 2/PHONE STAND 2-COMPLETE/PHONE STAND 2-COMPLETE2.jpeg','PHONE STAND 2/PHONE STAND 2-COMPLETE/PHONE STAND 2-COMPLETE3.jpeg','PHONE STAND 2/PHONE STAND 2-COMPLETE/PHONE STAND 2-COMPLETE4.jpeg','PHONE STAND 2/PHONE STAND 2-PROCESS/PHONE STAND 2-PROCESS1.jpeg','PHONE STAND 2/PHONE STAND 2-PROCESS/PHONE STAND 2-PROCESS2.jpeg','PHONE STAND 2/PHONE STAND 2-PROCESS/PHONE STAND 2-PROCESS3.jpeg','PHONE STAND 2/PHONE STAND 2-PROCESS/PHONE STAND 2-PROCESS4.jpeg','PHONE STAND 2/PHONE STAND 2-PROCESS/PHONE STAND 2-PROCESS5.jpeg'] },
+  { name:'Thai-Inspired Wood Chandelier', tag:'Lighting', slug:'thai-inspired-wood-chandelier', photos:['WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)1.JPG', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)2.JPG', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)3.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)4.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)5.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS1.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS2.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS3.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS4.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS7.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS8.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS10.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS11.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS13.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS17.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS18.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS19.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS22.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS24.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS26.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS27.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS28.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS29.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS30.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS31.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS32.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS33.jpeg', 'WOOD CHANDELIER (THAI ART INSPIRED)/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS/WOOD CHANDELIER (THAI ART INSPIRED)-PROCESS34.jpeg'] },
+  { name:'Shoe Horn — Long & Short', tag:'Home', slug:'shoe-horn-long-short', photos:['SHOE HORN LONG & SHORT/SHOE HORN6 copy.jpg','SHOE HORN LONG & SHORT/SHOE HORN2 copy.jpg','SHOE HORN LONG & SHORT/SHOE HORN3 copy.jpg','SHOE HORN LONG & SHORT/SHOE HORN5 copy.jpg','SHOE HORN LONG & SHORT/SHOE HORN7 copy.jpg'] },
+  { name:'Japanese-Inspired Stool', tag:'Furniture', slug:'japanese-inspired-stool', photos:['STOOL (JAPANESE INSPIRED)/STOOL (JAPANESE INSPIRED)1 copy.jpg','STOOL (JAPANESE INSPIRED)/STOOL (JAPANESE INSPIRED)2 copy.jpg','STOOL (JAPANESE INSPIRED)/STOOL (JAPANESE INSPIRED)3 copy.jpg','STOOL (JAPANESE INSPIRED)/STOOL (JAPANESE INSPIRED)5 copy.jpg','STOOL (JAPANESE INSPIRED)/STOOL (JAPANESE INSPIRED)6 copy.jpg'] },
+  { name:'Side Table (Happy Accident)', tag:'Furniture', slug:'side-table-happy-accident', photos:['FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-COMPLETE/FAILED STOOL BECAME SIDE TABLE-COMPLETE1.JPG', 'FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-COMPLETE/FAILED STOOL BECAME SIDE TABLE-COMPLETE2.JPG', 'FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-COMPLETE/FAILED STOOL BECAME SIDE TABLE-COMPLETE3.JPG', 'FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-COMPLETE/FAILED STOOL BECAME SIDE TABLE-COMPLETE4.JPG', 'FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-PROCESS/FAILED STOOL BECAME SIDE TABLE-PROCESS1.jpeg', 'FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-PROCESS/FAILED STOOL BECAME SIDE TABLE-PROCESS2.jpeg', 'FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-PROCESS/FAILED STOOL BECAME SIDE TABLE-PROCESS3.jpeg', 'FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-PROCESS/FAILED STOOL BECAME SIDE TABLE-PROCESS4.jpeg', 'FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-PROCESS/FAILED STOOL BECAME SIDE TABLE-PROCESS5.jpeg', 'FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-PROCESS/FAILED STOOL BECAME SIDE TABLE-PROCESS6.jpeg', 'FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-PROCESS/FAILED STOOL BECAME SIDE TABLE-PROCESS7.jpeg', 'FAILED STOOL BECAME SIDE TABLE/FAILED STOOL BECAME SIDE TABLE-PROCESS/FAILED STOOL BECAME SIDE TABLE-PROCESS8.jpeg'] },
+  { name:'Mallet', tag:'Tools', slug:'mallet', photos:['MALLET/MALLET-COMPLETE/MALLET-COMPLETE4.jpeg','MALLET/MALLET-COMPLETE/MALLET-COMPLETE2.jpeg','MALLET/MALLET-COMPLETE/MALLET-COMPLETE3.jpeg','MALLET/MALLET-COMPLETE/MALLET-COMPLETE4.jpeg','MALLET/MALLET-COMPLETE/MALLET-COMPLETE5.jpeg','MALLET/MALLET-COMPLETE/MALLET-COMPLETE6.jpeg','MALLET/MALLET-COMPLETE/MALLET-COMPLETE7.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS1.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS2.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS3.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS4.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS5.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS6.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS7.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS8.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS9.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS10.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS11.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS12.jpeg','MALLET/MALLET-PROCESS/MALLET-PROCESS13.jpeg'] },
+  { name:'Outdoor Shoes Rack + Storage', tag:'Outdoor', slug:'outdoor-shoes-rack-storage', photos:['OUTDOOR SHOES RACK+STORAGE/OUTDOOR SHOES RACK+STORAGE3.jpeg', 'OUTDOOR SHOES RACK+STORAGE/OUTDOOR SHOES RACK+STORAGE1.jpeg', 'OUTDOOR SHOES RACK+STORAGE/OUTDOOR SHOES RACK+STORAGE2.jpeg', 'OUTDOOR SHOES RACK+STORAGE/OUTDOOR SHOES RACK+STORAGE4.jpeg', 'OUTDOOR SHOES RACK+STORAGE/OUTDOOR SHOES RACK+STORAGE5.jpeg', 'OUTDOOR SHOES RACK+STORAGE/OUTDOOR SHOES RACK+STORAGE6.jpeg', 'OUTDOOR SHOES RACK+STORAGE/OUTDOOR SHOES RACK+STORAGE7.jpeg', 'OUTDOOR SHOES RACK+STORAGE/OUTDOOR SHOES RACK+STORAGE8.jpeg'] },
+  { name:'Pantry Bag Holder', tag:'Kitchen', slug:'pantry-bag-holder', photos:['PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE1.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE2.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE3.jpeg'] },
+  { name:'Soda Can Dispenser', tag:'Kitchen', slug:'soda-can-dispenser', photos:['PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE4.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE5.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE6.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE7.jpeg'] },
+  { name:'Dry Goods Storage Bins', tag:'Kitchen', slug:'dry-goods-storage-bins', photos:['PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE8.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE9.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE10.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE11.jpeg'] },
+  { name:'Two-Tier Can Stand', tag:'Kitchen', slug:'two-tier-can-stand', coverPos:'12% 38%', coverScale:1.8, coverOrigin:'left center', photos:['PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE12.jpeg','PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE13.jpeg'] },
+  { name:'Door Pantry Shelf', tag:'Kitchen', slug:'door-pantry-shelf', photos:['PANTRY ROOM UPGRADE/PANTRY ROOM UPGRADE-COMPLETE/PANTRY ROOM UPGRADE-COMPLETE14.jpeg'] },
+];
+
+// ── Shop grid ────────────────────────────────────────────────
+var shopGrid = document.getElementById('shop-grid');
+LP_SHOP.forEach(function(p) {
+  var card = document.createElement('div');
+  card.className = 'shop-card';
+  card.innerHTML = '<div class="shop-card-img"><img src="' + p.photos[0] + '" alt="' + p.name + '" /></div>' +
+    '<div class="shop-card-body">' +
+    '<div class="shop-card-tag">' + p.tag + '</div>' +
+    '<div class="shop-card-name">' + p.name + '</div>' +
+    '<div class="shop-card-price">' + p.price + '</div>' +
+    '<div class="shop-card-actions">' +
+    '<button class="shop-btn" onclick="event.stopPropagation();lbOpen(' + JSON.stringify(p.photos) + ',\'' + p.name + '\',0)">Gallery</button>' +
+    '<button class="shop-btn shop-btn-primary" onclick="event.stopPropagation();openDetails(\'' + p.slug + '\')">Details</button>' +
+    '</div></div>';
+  card.onclick = function() { lbOpen(p.photos, p.name, 0); };
+  shopGrid.appendChild(card);
+});
+
+// ── Product grid ─────────────────────────────────────────────
+var prodGrid = document.getElementById('product-grid');
+LP_PRODUCTS.forEach(function(p) {
+  var card = document.createElement('div');
+  card.className = 'product-card';
+  var imgStyle = 'width:100%;height:100%;object-fit:' + (p.coverContain ? 'contain' : 'cover') + ';display:block;transition:transform 0.5s ease;';
+  if (p.coverPos) imgStyle += 'object-position:' + p.coverPos + ';';
+  if (p.coverScale) imgStyle += 'transform:scale(' + p.coverScale + ');transform-origin:' + (p.coverOrigin || 'center center') + ';';
+  card.innerHTML = '<div class="product-card-img"><img src="' + p.photos[0] + '" alt="' + p.name + '" style="' + imgStyle + '" /></div>' +
+    '<div class="product-card-body">' +
+    '<div class="product-card-tag">' + p.tag + '</div>' +
+    '<div class="product-card-name">' + p.name + '</div>' +
+    '<div class="product-card-action">' +
+    '<span class="product-card-photos">' + p.photos.length + ' photo' + (p.photos.length > 1 ? 's' : '') + '</span>' +
+    '<button class="product-card-btn" onclick="event.stopPropagation();openDetails(\'' + p.slug + '\')">Details →</button>' +
+    '</div></div>';
+  card.onclick = function() { lbOpen(p.photos, p.name, 0); };
+  prodGrid.appendChild(card);
+});
+
+// ── Garage ───────────────────────────────────────────────────
+var _garageImgs = [
+  'DINNING CHAIR/DINING CHAIR (IN PROGRESS)1.jpeg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)2.jpeg',
+  'DINNING CHAIR/DINING CHAIR (IN PROGRESS)3.jpeg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)4.jpeg',
+  'DINNING CHAIR/DINING CHAIR (IN PROGRESS)5.jpeg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)6.jpeg',
+  'DINNING CHAIR/DINING CHAIR (IN PROGRESS)7.jpeg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)8.jpeg',
+  'DINNING CHAIR/DINING CHAIR (IN PROGRESS)9.jpeg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)10.jpeg',
+  'DINNING CHAIR/DINING CHAIR (IN PROGRESS)11.jpeg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)12.jpeg',
+  'DINNING CHAIR/DINING CHAIR (IN PROGRESS)13.JPG','DINNING CHAIR/DINING CHAIR (IN PROGRESS)14.JPG',
+  'DINNING CHAIR/DINING CHAIR (IN PROGRESS)15.JPG','DINNING CHAIR/DINING CHAIR (IN PROGRESS)16.JPG'
+];
+var thumbWrap = document.getElementById('garage-thumbs');
+_garageImgs.forEach(function(src, i) {
+  var img = document.createElement('img');
+  img.src = src; img.className = 'garage-thumb' + (i === 12 ? ' active' : '');
+  img.onclick = function() {
+    document.getElementById('garage-main-img').src = src;
+    document.querySelectorAll('.garage-thumb').forEach(function(t,j){ t.classList.toggle('active', j===i); });
+  };
+  thumbWrap.appendChild(img);
+});
+
+// ── Lightbox ─────────────────────────────────────────────────
+var _lbPhotos = [], _lbIdx = 0;
+function lbOpen(photos, name, idx) {
+  _lbPhotos = photos; _lbIdx = idx;
+  document.getElementById('lp-lb-title').textContent = name;
+  document.getElementById('lp-lb-img').src = photos[idx];
+  var thumbs = document.getElementById('lp-lb-thumbs');
+  thumbs.innerHTML = '';
+  photos.forEach(function(p, i) {
+    var t = document.createElement('img');
+    t.src = p; t.className = 'lb-thumb' + (i === idx ? ' active' : '');
+    t.onclick = function() { lbShow(i); };
+    thumbs.appendChild(t);
+  });
+  document.getElementById('lp-lb').style.display = 'flex';
+}
+function lbShow(idx) {
+  _lbIdx = (idx + _lbPhotos.length) % _lbPhotos.length;
+  document.getElementById('lp-lb-img').src = _lbPhotos[_lbIdx];
+  document.querySelectorAll('.lb-thumb').forEach(function(t,i){ t.classList.toggle('active', i===_lbIdx); });
+}
+function lbClose() { document.getElementById('lp-lb').style.display = 'none'; }
+function lbStep(dir) { lbShow(_lbIdx + dir); }
+document.addEventListener('keydown', function(e) {
+  if (document.getElementById('lp-lb').style.display !== 'none') {
+    if (e.key === 'Escape') lbClose();
+    if (e.key === 'ArrowRight') lbStep(1);
+    if (e.key === 'ArrowLeft') lbStep(-1);
+  }
+});
+
+// ── Details navigation ────────────────────────────────────────
+function openDetails(slug) {
+  if (window.innerWidth <= 700) {
+    document.getElementById('lp-detail-frame').src = 'product.html?id=' + slug;
+    document.getElementById('lp-detail-modal').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  } else {
+    window.location.href = 'product.html?id=' + slug;
+  }
+}
+function lpCloseDetailModal() {
+  document.getElementById('lp-detail-modal').style.display = 'none';
+  document.getElementById('lp-detail-frame').src = '';
+  document.body.style.overflow = '';
+}
+</script>
+</body>
+</html>
