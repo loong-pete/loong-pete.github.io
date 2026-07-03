@@ -203,6 +203,8 @@ footer { background: url('Black-Walnut-Wood.jpg') right top/cover no-repeat; box
   footer { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1.5rem 1.25rem; }
   nav { height: 72px; padding: 0 1.25rem; }
   nav img[alt="Loong Pete Garage Woodcraft"] { height: 58px !important; }
+  .singha-grid { grid-template-columns: 1fr !important; }
+  .singha-grid p { font-size: 15px !important; }
 }
 </style>
 </head>
@@ -276,7 +278,7 @@ footer { background: url('Black-Walnut-Wood.jpg') right top/cover no-repeat; box
       <div class="section-title" style="color:#f5e8d0;">The Singha sculpture</div>
     </div>
   </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:center;">
+  <div class="singha-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:center;">
     <div style="position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/3;cursor:pointer;" onclick="lbOpen(_sgImgs,'Singha Sculpture',0)">
       <img src="SINGHA- HOMEPAGE-BRANDING/SINGHA-COMPLETE/SINGHA-COMPLETE14 copy.jpg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="Singha sculpture" />
       <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(20,10,2,0.5) 0%,transparent 50%);"></div>
