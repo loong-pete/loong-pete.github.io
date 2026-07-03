@@ -514,7 +514,7 @@ LP_SHOP.forEach(function(p) {
     '<button class="shop-btn" onclick="event.stopPropagation();lbOpen(' + JSON.stringify(p.photos) + ',\'' + p.name + '\',0,' + (p.video ? JSON.stringify(p.video) : 'null') + ')">Gallery</button>' +
     '<button class="shop-btn shop-btn-primary" onclick="event.stopPropagation();openDetails(\'' + p.slug + '\')">Details</button>' +
     '</div></div>';
-  card.onclick = function() { lbOpen(p.photos, p.name, 0, p.video || null); };
+  card.onclick = function() { openDetails(p.slug); };
   shopGrid.appendChild(card);
 });
 
@@ -537,7 +537,7 @@ LP_PRODUCTS.forEach(function(p) {
     (p.price ? '<span style="font-size:12px;font-weight:300;color:#7a4a1a;letter-spacing:0.02em;">' + p.price + '</span>' : '<span class="product-card-photos">' + p.photos.length + ' photo' + (p.photos.length > 1 ? 's' : '') + '</span>') +
     '<button class="product-card-btn" onclick="event.stopPropagation();openDetails(\'' + p.slug + '\')">Details →</button>' +
     '</div></div>';
-  card.onclick = function() { lbOpen(p.photos, p.name, 0, p.video || null); };
+  card.onclick = function() { openDetails(p.slug); };
   prodGrid.appendChild(card);
 });
 
