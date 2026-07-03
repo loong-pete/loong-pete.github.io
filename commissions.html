@@ -362,12 +362,12 @@ nav {
     reader.onload = function(e) {
       var img = new Image();
       img.onload = function() {
-        var maxW = 900, scale = Math.min(1, maxW / img.width);
+        var maxW = 500, scale = Math.min(1, maxW / img.width);
         var canvas = document.createElement('canvas');
         canvas.width = img.width * scale;
         canvas.height = img.height * scale;
         canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
-        cb(canvas.toDataURL('image/jpeg', 0.75));
+        cb(canvas.toDataURL('image/jpeg', 0.5));
       };
       img.src = e.target.result;
     };
