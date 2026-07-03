@@ -6,6 +6,8 @@
 <title>Commissions — Loong Pete Garage Woodcraft</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -56,7 +58,7 @@ nav {
 
 .divider { border: none; border-top: 0.5px solid var(--border); margin: 2.5rem 0; }
 
-/* ── FORM ── */
+/* ── FORM BOX ── */
 .form-box {
   background: url('Black-Walnut-Wood.jpg') center/cover no-repeat;
   box-shadow: inset 0 0 0 9999px rgba(10,5,2,0.72);
@@ -67,7 +69,7 @@ nav {
 .form-box-logo img { width: 200px; opacity: 0.85; }
 .form-box-eyebrow { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
 .form-box-title { font-family: 'Outfit', sans-serif; font-size: 1.5rem; font-weight: 600; color: #f5e8d0; margin-bottom: 0.5rem; }
-.form-box-desc { font-size: 13px; color: rgba(245,232,208,0.6); font-weight: 300; line-height: 1.7; margin-bottom: 2rem; }
+.form-box-desc { font-size: 13px; color: rgba(245,232,208,0.6); font-weight: 300; line-height: 1.7; }
 
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
 .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 1rem; }
@@ -93,10 +95,29 @@ nav {
 .form-group select:focus { border-color: rgba(245,232,208,0.5); background: rgba(255,255,255,0.1); }
 .form-group select option { background: #1a0e04; color: #f5e8d0; }
 .form-group textarea { resize: vertical; min-height: 130px; }
-.photo-note { border: 1px dashed rgba(245,232,208,0.2); border-radius: 10px; padding: 1rem 1.25rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
-.photo-note-text { font-size: 13px; color: rgba(245,232,208,0.55); line-height: 1.5; }
-.photo-email-btn { display: inline-flex; align-items: center; gap: 6px; background: rgba(255,255,255,0.08); border: 0.5px solid rgba(245,232,208,0.25); color: #f5e8d0; font-size: 13px; font-family: 'DM Sans', sans-serif; padding: 9px 16px; border-radius: 100px; text-decoration: none; white-space: nowrap; transition: background 0.2s; }
-.photo-email-btn:hover { background: rgba(255,255,255,0.14); }
+
+/* ── PHOTO UPLOAD ── */
+.upload-area {
+  border: 1.5px dashed rgba(245,232,208,0.25);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  margin-bottom: 1rem;
+  position: relative;
+}
+.upload-area:hover, .upload-area.drag-over { border-color: rgba(245,232,208,0.55); background: rgba(255,255,255,0.05); }
+.upload-area input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.upload-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+.upload-label { font-size: 13px; color: rgba(245,232,208,0.7); line-height: 1.5; }
+.upload-label span { color: var(--gold); }
+.upload-hint { font-size: 11px; color: rgba(245,232,208,0.35); margin-top: 4px; }
+
+.photo-previews { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1rem; }
+.photo-preview-item { position: relative; width: 72px; height: 72px; border-radius: 8px; overflow: hidden; border: 0.5px solid rgba(245,232,208,0.2); }
+.photo-preview-item img { width: 100%; height: 100%; object-fit: cover; }
+.photo-preview-remove { position: absolute; top: 3px; right: 3px; background: rgba(0,0,0,0.7); color: #fff; border: none; border-radius: 50%; width: 18px; height: 18px; font-size: 11px; cursor: pointer; display: flex; align-items: center; justify-content: center; line-height: 1; }
 
 .btn-submit {
   width: 100%;
@@ -110,10 +131,13 @@ nav {
   border-radius: 100px;
   cursor: pointer;
   letter-spacing: 0.04em;
-  transition: background 0.2s;
+  transition: background 0.2s, opacity 0.2s;
   margin-top: 0.5rem;
 }
 .btn-submit:hover { background: var(--gold-light); }
+.btn-submit:disabled { opacity: 0.6; cursor: default; }
+
+.form-error { display: none; font-size: 13px; color: #ff8a8a; margin-top: 0.75rem; text-align: center; }
 
 .form-success { display: none; text-align: center; padding: 2rem 0; }
 .form-success-icon { font-size: 2.5rem; margin-bottom: 1rem; }
@@ -121,13 +145,15 @@ nav {
 .form-success-text { font-size: 13px; color: rgba(245,232,208,0.6); line-height: 1.7; }
 
 @media (max-width: 600px) {
-  nav { padding: 0 1.25rem; }
+  nav { padding: 0 1.25rem; height: 72px; }
   .nav-links { display: none; }
   .page-hero { padding: 4rem 1.5rem 3rem; }
   .page-hero-title { font-size: 2rem; }
   .content { padding: 3rem 1.25rem 4rem; }
   .form-box { padding: 2rem 1.5rem; }
   .form-row { grid-template-columns: 1fr; }
+  .form-box-header { grid-template-columns: 1fr; }
+  .form-box-logo { display: none; }
   .hamburger { display: block; }
 }
 .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
@@ -186,15 +212,14 @@ nav {
       <div>
         <div class="form-box-eyebrow">Get in touch</div>
         <div class="form-box-title">Tell me about your project</div>
-        <p class="form-box-desc" style="margin-bottom:0;">I'll get back to you within 1–2 days.</p>
+        <p class="form-box-desc">I'll get back to you within 1–2 days.</p>
       </div>
       <div class="form-box-logo">
         <img src="loong-pete-logo-transparent.png" alt="Loong Pete Garage Woodcraft" />
       </div>
     </div>
 
-    <!-- Replace YOUR_FORM_ID with your Formspree ID when you host the site -->
-    <form id="commission-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+    <form id="commission-form">
       <div class="form-row">
         <div class="form-group">
           <label for="name">Your Name</label>
@@ -210,9 +235,9 @@ nav {
         <select id="piece" name="piece">
           <option value="" disabled selected>Select a category</option>
           <option>Furniture</option>
-          <option>Storage & Organization</option>
-          <option>Frames & Decor</option>
-          <option>Kitchen & Serving</option>
+          <option>Storage &amp; Organization</option>
+          <option>Frames &amp; Decor</option>
+          <option>Kitchen &amp; Serving</option>
           <option>Outdoor</option>
           <option>Pet</option>
           <option>Something else</option>
@@ -222,25 +247,57 @@ nav {
         <label for="message">Describe your idea</label>
         <textarea id="message" name="message" placeholder="Tell me about the piece — dimensions, wood preference, how you plan to use it, any inspiration photos..." required></textarea>
       </div>
-      <button type="submit" class="btn-submit">Send Message</button>
+
+      <div class="form-group">
+        <label>Inspiration photos (optional)</label>
+        <div class="upload-area" id="upload-area">
+          <input type="file" id="photo-input" accept="image/*" multiple />
+          <div class="upload-icon">📷</div>
+          <div class="upload-label">Tap to add photos <span>or drag &amp; drop</span></div>
+          <div class="upload-hint">JPG, PNG, HEIC — up to 4 photos</div>
+        </div>
+        <div class="photo-previews" id="photo-previews"></div>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submit-btn">Send Message</button>
+      <div class="form-error" id="form-error">Something went wrong. Please try again or email Pete directly at loongpetegarage@gmail.com</div>
     </form>
-    <div class="photo-note">
-      <div class="photo-note-text">Have inspiration photos? Send them directly to Pete.</div>
-      <a class="photo-email-btn" href="mailto:loongpetegarage@gmail.com?subject=Commission%20Inquiry%20%E2%80%94%20Inspiration%20Photos&body=Hi%20Pete%2C%0A%0AI%27m%20interested%20in%20a%20custom%20piece.%20I%27ve%20attached%20some%20inspiration%20photos%20below.%0A%0A">
-        📎 &nbsp;Email photos to Pete
-      </a>
-    </div>
 
     <div class="form-success" id="form-success">
       <div class="form-success-icon">✓</div>
       <div class="form-success-title">Message sent!</div>
-      <p class="form-success-text">Thanks for reaching out. I'll get back to you within 1–2 days.</p>
+      <p class="form-success-text">Thanks for reaching out. Pete will get back to you within 1–2 days.</p>
     </div>
   </div>
 </div>
 
 <script>
-  var form = document.getElementById('commission-form');
+  // ─────────────────────────────────────────────
+  // EMAILJS SETUP — paste your 3 keys here:
+  // Step 1: Sign up free at https://emailjs.com
+  // Step 2: Add Service → Gmail → connect loongpetegarage@gmail.com → copy Service ID
+  // Step 3: Create Template (use variables below) → copy Template ID
+  // Step 4: Account → API Keys → copy Public Key
+  // ─────────────────────────────────────────────
+  var EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // e.g. 'abc123XYZ'
+  var EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // e.g. 'service_xxxxxxx'
+  var EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // e.g. 'template_xxxxxxx'
+  // ─────────────────────────────────────────────
+  // EmailJS Template — paste this in your template body:
+  //
+  // Subject: New Commission from {{from_name}}
+  //
+  // Name: {{from_name}}
+  // Email: {{from_email}}
+  // Category: {{piece}}
+  //
+  // {{message}}
+  //
+  // {{photos_html}}
+  // ─────────────────────────────────────────────
+
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+
   var hamburger = document.getElementById('hamburger');
   var mobileMenu = document.getElementById('mobile-menu');
   hamburger.addEventListener('click', function() { mobileMenu.classList.toggle('open'); });
@@ -248,19 +305,117 @@ nav {
     link.addEventListener('click', function() { mobileMenu.classList.remove('open'); });
   });
 
+  // ── Photo upload ──
+  var photoFiles = [];
+  var photoInput = document.getElementById('photo-input');
+  var uploadArea = document.getElementById('upload-area');
+  var previewsEl = document.getElementById('photo-previews');
+
+  photoInput.addEventListener('change', function() {
+    addFiles(Array.from(this.files));
+    this.value = '';
+  });
+  uploadArea.addEventListener('dragover', function(e) { e.preventDefault(); uploadArea.classList.add('drag-over'); });
+  uploadArea.addEventListener('dragleave', function() { uploadArea.classList.remove('drag-over'); });
+  uploadArea.addEventListener('drop', function(e) {
+    e.preventDefault(); uploadArea.classList.remove('drag-over');
+    addFiles(Array.from(e.dataTransfer.files).filter(function(f) { return f.type.startsWith('image/'); }));
+  });
+
+  function addFiles(files) {
+    files.forEach(function(file) {
+      if (photoFiles.length >= 4) return;
+      photoFiles.push(file);
+      var reader = new FileReader();
+      reader.onload = function(e) { renderPreview(e.target.result, photoFiles.length - 1); };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  function renderPreview(src, idx) {
+    var item = document.createElement('div');
+    item.className = 'photo-preview-item';
+    item.dataset.idx = idx;
+    item.innerHTML = '<img src="' + src + '"><button class="photo-preview-remove" type="button">✕</button>';
+    item.querySelector('button').addEventListener('click', function() {
+      photoFiles.splice(idx, 1);
+      rebuildPreviews();
+    });
+    previewsEl.appendChild(item);
+  }
+
+  function rebuildPreviews() {
+    previewsEl.innerHTML = '';
+    var saved = photoFiles.slice();
+    photoFiles = [];
+    saved.forEach(function(file) {
+      photoFiles.push(file);
+      var reader = new FileReader();
+      reader.onload = function(e) { renderPreview(e.target.result, photoFiles.length - 1); };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // ── Resize image to max 900px wide, return base64 ──
+  function resizeImage(file, cb) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var img = new Image();
+      img.onload = function() {
+        var maxW = 900, scale = Math.min(1, maxW / img.width);
+        var canvas = document.createElement('canvas');
+        canvas.width = img.width * scale;
+        canvas.height = img.height * scale;
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        cb(canvas.toDataURL('image/jpeg', 0.75));
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // ── Form submit ──
+  var form = document.getElementById('commission-form');
+  var submitBtn = document.getElementById('submit-btn');
+  var formError = document.getElementById('form-error');
+
   form.addEventListener('submit', function(e) {
-    if (form.action.includes('YOUR_FORM_ID')) return; // let mailto fallback handle it locally
     e.preventDefault();
-    fetch(form.action, {
-      method: 'POST',
-      body: new FormData(form),
-      headers: { 'Accept': 'application/json' }
-    }).then(function(res) {
-      if (res.ok) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+    formError.style.display = 'none';
+
+    var pending = photoFiles.length;
+    var photosHtml = '';
+
+    function send() {
+      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+        from_name:  document.getElementById('name').value,
+        from_email: document.getElementById('email').value,
+        piece:      document.getElementById('piece').value || 'Not selected',
+        message:    document.getElementById('message').value,
+        photos_html: photosHtml
+      }).then(function() {
         form.style.display = 'none';
         document.getElementById('form-success').style.display = 'block';
-      }
-    });
+      }, function() {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
+        formError.style.display = 'block';
+      });
+    }
+
+    if (pending === 0) {
+      send();
+    } else {
+      photoFiles.forEach(function(file) {
+        resizeImage(file, function(dataUrl) {
+          photosHtml += '<img src="' + dataUrl + '" style="max-width:600px;width:100%;margin:8px 0;display:block;" />';
+          pending--;
+          if (pending === 0) send();
+        });
+      });
+    }
   });
 </script>
 
