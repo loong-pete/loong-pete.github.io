@@ -163,6 +163,13 @@ nav {
 .mobile-menu a { display: block; font-size: 14px; color: rgba(245,232,208,0.8); text-decoration: none; letter-spacing: 0.04em; padding: 0.85rem 0; border-bottom: 0.5px solid rgba(255,255,255,0.07); }
 .mobile-menu a:last-child { border-bottom: none; }
 .mobile-menu.open { display: flex; }
+footer { background: url('Black-Walnut-Wood.jpg') right top/cover no-repeat; box-shadow: inset 0 0 0 9999px rgba(10,5,2,0.55); padding: 2rem 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+.footer-brand { font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #f5e8d0; }
+.footer-links { display: flex; gap: 1.5rem; }
+.footer-links a { font-size: 11px; color: rgba(245,232,208,0.65); text-decoration: none; letter-spacing: 0.04em; }
+.footer-links a:hover { color: #f5e8d0; }
+.footer-copy { font-size: 11px; color: rgba(245,232,208,0.35); letter-spacing: 0.04em; }
+@media (max-width: 600px) { footer { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1.5rem 1.25rem; } }
 </style>
 </head>
 <body>
@@ -340,6 +347,19 @@ nav {
     });
   });
 </script>
+
+<footer>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <img src="loong-pete-logo-transparent.png" style="height:52px;width:auto;" alt="Loong Pete" />
+    <div class="footer-brand">Loong Pete<br>Garage Woodcraft</div>
+  </div>
+  <div class="footer-links">
+    <a href="index.html">Shop</a>
+    <a href="commissions.html">Commissions</a>
+    <a href="index.html#about">About</a>
+  </div>
+  <div class="footer-copy">© 2025 Loong Pete Garage Woodcraft</div>
+</footer>
 
 </body>
 </html>
