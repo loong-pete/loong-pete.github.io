@@ -137,7 +137,7 @@
     </div>
 
     <div class="lp-cta">
-      <button class="lp-btn-primary" style="opacity:0.5;cursor:default;">Etsy Shop Coming Soon</button>
+      <a id="lp-etsy-btn" href="#" target="_blank" rel="noopener" class="lp-btn-primary" style="display:block;text-decoration:none;text-align:center;">Buy on Etsy</a>
       <button class="lp-btn-secondary" onclick="history.back()">&#8592; Back to collection</button>
       <div class="lp-note">All pieces are handmade to order in San Antonio, TX.<br>Contact me to discuss sizing, wood, and custom options.</div>
     </div>
@@ -312,7 +312,7 @@ var LP_DETAILS = {
     name: 'Walnut & Ash Keepsake Box (Free Name Engraving)', tag: 'Gift', price: 'From $55',
     desc: 'A handcrafted jewelry box made from dark walnut and ash. The perfect gift or a treat for yourself. Can be personalized with an engraved name or message on the lid.',
     photos: ['JEWELRY BOX/JEWELRY BOX-COMPLETE/JEWELRY BOX-COMPLETE1.jpg','JEWELRY BOX/JEWELRY BOX-COMPLETE/JEWELRY BOX-COMPLETE2.jpg','JEWELRY BOX/JEWELRY BOX-COMPLETE/JEWELRY BOX-COMPLETE3.jpg','JEWELRY BOX/JEWELRY BOX-COMPLETE/JEWELRY BOX-COMPLETE4.jpg','JEWELRY BOX/JEWELRY BOX-COMPLETE/JEWELRY BOX-COMPLETE5.jpg','JEWELRY BOX/JEWELRY BOX-COMPLETE/JEWELRY BOX-COMPLETE6.jpg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS2.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS3.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS4.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS5.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS6.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS7.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS8.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS9.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS10.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS11.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS12.jpeg','JEWELRY BOX/JEWELRY BOX-PROCESS/JEWELRY BOX-PROCESS13.jpeg'],
-    dimensions: 'W 3⅜" × L 4½" × H 2"', wood: 'Dark Walnut & Ash', finish: 'Tung Oil', custom: 'Engrave a name, initials, or short message on the lid.',   },
+    dimensions: 'W 3⅜" × L 4½" × H 2"', wood: 'Dark Walnut & Ash', finish: 'Tung Oil', custom: 'Engrave a name, initials, or short message on the lid.', etsy: 'https://www.etsy.com/listing/4532655987/walnut-ash-keepsake-box-free-name',   },
   'rustic-house-number-sign': {
     name: 'Rustic House Number Sign', tag: 'Home', price: 'From $150',
     desc: 'A fully handmade cedar house number sign with scroll saw cut-out numbers. Each one is made to order — built to your address and finished with lacquer for outdoor durability. Commission-based: reach out to get yours started.',
@@ -393,6 +393,18 @@ function init() {
 
   var customEl = document.getElementById('lp-custom');
   if (prod.custom) customEl.textContent = prod.custom;
+
+  var etsyBtn = document.getElementById('lp-etsy-btn');
+  if (prod.etsy) {
+    etsyBtn.href = prod.etsy;
+    etsyBtn.textContent = 'Buy on Etsy';
+    etsyBtn.style.opacity = '1';
+    etsyBtn.style.pointerEvents = 'auto';
+  } else {
+    etsyBtn.textContent = 'Etsy Shop Coming Soon';
+    etsyBtn.style.opacity = '0.5';
+    etsyBtn.style.pointerEvents = 'none';
+  }
 
   // Main photo
   document.getElementById('lp-main-img').src = _photos[0];
