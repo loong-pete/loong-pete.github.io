@@ -181,7 +181,10 @@ footer { background: url('Black-Walnut-Wood.jpg') right top/cover no-repeat; box
 .mobile-menu a:last-child { border-bottom: none; }
 .mobile-menu a:hover { color: #f5e8d0; }
 .mobile-menu.open { display: flex; }
+.banner-mobile { display: none; }
 @media (max-width:700px) {
+  .banner-full { display: none; }
+  .banner-mobile { display: inline; }
   nav { padding: 0 1.25rem; }
   .nav-links { display: none; }
   .nav-cta { display: none; }
@@ -229,8 +232,9 @@ footer { background: url('Black-Walnut-Wood.jpg') right top/cover no-repeat; box
     <span></span><span></span><span></span>
   </button>
 </nav>
-<div style="background:#3b2a1a;color:#f5e8d0;text-align:center;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:0.08em;padding:8px 1rem;">
-  ✦ 100% Handmade &nbsp;✦ Personalized &nbsp;✦ Free Shipping &nbsp;✦ Made to Order
+<div style="position:sticky;top:90px;z-index:99;background:#3b2a1a;color:#f5e8d0;text-align:center;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:0.08em;padding:8px 1rem;">
+  <span class="banner-full">✦ 100% Handmade &nbsp;✦ Personalized &nbsp;✦ Free Shipping &nbsp;✦ Made to Order</span>
+  <span class="banner-mobile">✦ 100% Handmade &nbsp;✦ Personalized &nbsp;✦ Free Shipping</span>
 </div>
 <div class="mobile-menu" id="mobile-menu">
   <a href="#">Shop</a>
