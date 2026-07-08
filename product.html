@@ -144,6 +144,19 @@
   </div>
 </div>
 
+<!-- Local pickup warning modal -->
+<div id="pickup-modal" style="display:none;position:fixed;inset:0;background:rgba(8,3,0,0.82);z-index:1300;align-items:center;justify-content:center;padding:1.5rem;">
+  <div style="background:#1a0e06;border:0.5px solid rgba(255,255,255,0.12);border-radius:16px;max-width:420px;width:100%;padding:2rem;font-family:'DM Sans',sans-serif;">
+    <div style="font-size:2rem;margin-bottom:0.75rem;">📦</div>
+    <div style="font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;color:#f5e8d0;margin-bottom:0.75rem;">Large Item — Pickup or Freight</div>
+    <div style="font-size:14px;color:rgba(245,232,208,0.75);line-height:1.65;margin-bottom:1.5rem;">This item is large and heavy. It is available for <strong style="color:#f5e8d0;">local pickup in San Antonio, TX</strong>, or freight shipping at an additional cost.<br><br>Please message me on Etsy before purchasing to confirm shipping to your location.</div>
+    <div style="display:flex;gap:0.75rem;flex-direction:column;">
+      <a id="pickup-modal-continue" href="#" target="_blank" rel="noopener" style="display:block;text-align:center;text-decoration:none;background:#c8812a;color:#fff8f0;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:13px 20px;border-radius:100px;">I Understand — Continue to Etsy</a>
+      <button onclick="document.getElementById('pickup-modal').style.display='none'" style="background:none;border:0.5px solid rgba(245,232,208,0.25);color:rgba(245,232,208,0.6);font-family:'DM Sans',sans-serif;font-size:13px;padding:12px 20px;border-radius:100px;cursor:pointer;">Go Back</button>
+    </div>
+  </div>
+</div>
+
 <!-- Video overlay -->
 <div id="lp-vid-overlay" style="display:none;position:fixed;inset:0;background:rgba(8,3,0,0.94);z-index:1200;align-items:center;justify-content:center;" onclick="if(event.target===this)vidClose()">
   <button onclick="vidClose()" style="position:absolute;top:18px;right:22px;background:none;border:none;color:#f5e8d0;font-size:26px;cursor:pointer;">&#x2715;</button>
@@ -396,8 +409,20 @@ function init() {
 
   var etsyBtn = document.getElementById('lp-etsy-btn');
   if (prod.etsy) {
-    etsyBtn.href = prod.etsy;
-    etsyBtn.textContent = 'Buy on Etsy — Free Shipping';
+    var isLargeItem = prod.custom && prod.custom.toLowerCase().includes('local pickup');
+    if (isLargeItem) {
+      document.getElementById('pickup-modal-continue').href = prod.etsy;
+      etsyBtn.removeAttribute('href');
+      etsyBtn.style.cursor = 'pointer';
+      etsyBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('pickup-modal').style.display = 'flex';
+      });
+      etsyBtn.textContent = 'Buy on Etsy — Free Shipping';
+    } else {
+      etsyBtn.href = prod.etsy;
+      etsyBtn.textContent = 'Buy on Etsy — Free Shipping';
+    }
     etsyBtn.style.opacity = '1';
     etsyBtn.style.pointerEvents = 'auto';
   } else {
