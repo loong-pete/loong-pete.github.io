@@ -516,7 +516,7 @@ LP_SHOP.forEach(function(p) {
   card.id = 'card-' + p.slug;
   card.innerHTML = '<div class="shop-card-img">' +
     (p.badge ? '<div class="ribbon-wrap"><div class="ribbon">' + p.badge + '</div></div>' : '') +
-    '<img src="' + p.photos[0] + '" alt="' + p.name + '" /></div>' +
+    '<img src="' + p.photos[0] + '" alt="' + p.name + '" loading="lazy" /></div>' +
     '<div class="shop-card-body">' +
     '<div class="shop-card-tag">' + p.tag + '</div>' +
     '<div class="shop-card-name">' + p.name.replace(/\s*\(Free Name Engraving\)/, '') + '</div>' +
@@ -538,7 +538,7 @@ LP_PRODUCTS.forEach(function(p) {
   if (p.coverScale) imgStyle += 'transform:scale(' + p.coverScale + ');transform-origin:' + (p.coverOrigin || 'center center') + ';';
   card.innerHTML = '<div class="product-card-img">' +
     (p.badge ? '<div class="ribbon-wrap"><div class="ribbon">' + p.badge + '</div></div>' : '') +
-    '<img src="' + p.photos[0] + '" alt="' + p.name + '" style="' + imgStyle + '" /></div>' +
+    '<img src="' + p.photos[0] + '" alt="' + p.name + '" loading="lazy" style="' + imgStyle + '" /></div>' +
     '<div class="product-card-body">' +
     '<div class="product-card-tag">' + p.tag + '</div>' +
     '<div class="product-card-name">' + p.name.replace(/\s*\(Free Name Engraving\)/, '') + '</div>' +
