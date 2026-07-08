@@ -204,7 +204,9 @@ footer { background: url('Black-Walnut-Wood.jpg') right top/cover no-repeat; box
   .garage-thumbs { grid-template-columns: repeat(4, 1fr); }
   .commission { grid-template-columns: 1fr; padding: 2rem 1.5rem; gap: 2rem; }
   footer { flex-direction: column; align-items: flex-start; gap: 1rem; padding: 1.5rem 1.25rem; }
-  nav img[alt="Loong Pete Garage Woodcraft"] { height: 52px !important; }
+  nav img[alt="Loong Pete Garage Woodcraft"] { height: 46px !important; }
+  .nav-logo-text { font-size: 8.5px !important; letter-spacing: 0.10em !important; }
+  .nav-etsy-mobile { display: flex !important; }
   .singha-grid { grid-template-columns: 1fr !important; }
   .singha-grid p { font-size: 15px !important; }
   .about-grid { grid-template-columns: 1fr !important; }
@@ -218,7 +220,7 @@ footer { background: url('Black-Walnut-Wood.jpg') right top/cover no-repeat; box
 <nav>
   <a href="#" style="display:flex;align-items:center;gap:14px;text-decoration:none;">
     <img src="loong-pete-logo-transparent.png" alt="Loong Pete Garage Woodcraft" style="height:88px;width:auto;" />
-    <span style="font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#f5e8d0;line-height:1.4;">Loong Pete<br>Garage Woodcraft</span>
+    <span class="nav-logo-text" style="font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:#f5e8d0;line-height:1.4;">Loong Pete<br>Garage<br>Woodcraft</span>
   </a>
   <div class="nav-links">
     <a href="#">Shop</a>
@@ -227,6 +229,10 @@ footer { background: url('Black-Walnut-Wood.jpg') right top/cover no-repeat; box
     <a href="#about">About</a>
   </div>
   <a href="https://www.etsy.com/shop/LoongPete" target="_blank" class="nav-cta" style="text-decoration:none;">Shop at Etsy · Free Shipping</a>
+  <a href="https://www.etsy.com/shop/LoongPete" target="_blank" class="nav-etsy-mobile" style="display:none;align-items:center;gap:6px;text-decoration:none;background:#f1641e;color:#fff;font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:7px 11px;border-radius:100px;">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg"><path d="M19.8 18.4c-.9.2-4.6.7-5.7.7-1.5 0-2.1-.7-2.1-2.1V11h5.2l-.5-3H12V3.4S11.7 2 10.3 2H7v6H4.5l-.5 3H7v7c0 3.2 2.3 4 5.1 4 2.2 0 5.1-.7 6.6-1.3l1.1-2.3z"/></svg>
+    Shop Etsy
+  </a>
   <button class="hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
