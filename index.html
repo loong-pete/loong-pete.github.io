@@ -410,6 +410,10 @@ footer { background: url('Black-Walnut-Wood.jpg') right top/cover no-repeat; box
   <button onclick="document.getElementById('bh-video-player').pause();document.getElementById('bh-video-player').src='';document.getElementById('bh-video').style.display='none'" style="position:absolute;top:1.5rem;right:1.5rem;background:rgba(255,255,255,0.1);border:none;color:#f5e8d0;font-size:22px;width:44px;height:44px;border-radius:50%;cursor:pointer;">✕</button>
   <video id="bh-video-player" src="" controls style="max-width:90vw;max-height:85vh;border-radius:12px;"></video>
 </div>
+<div id="wip-vid" style="display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;" onclick="if(event.target===this){document.getElementById('wip-vid-player').pause();document.getElementById('wip-vid-player').src='';this.style.display='none'}">
+  <button onclick="document.getElementById('wip-vid-player').pause();document.getElementById('wip-vid-player').src='';document.getElementById('wip-vid').style.display='none'" style="position:absolute;top:1.5rem;right:1.5rem;background:rgba(255,255,255,0.1);border:none;color:#f5e8d0;font-size:22px;width:44px;height:44px;border-radius:50%;cursor:pointer;">✕</button>
+  <video id="wip-vid-player" src="" controls style="max-width:90vw;max-height:85vh;border-radius:12px;"></video>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -556,7 +560,8 @@ var WIP_PROJECTS = [
       'CLOCK-MID CENTURY/CLOCK-MID CENTURY5.jpeg',
       'CLOCK-MID CENTURY/CLOCK-MID CENTURY6.jpeg',
       'CLOCK-MID CENTURY/CLOCK-MID CENTURY7.jpeg'
-    ]
+    ],
+    video: 'CLOCK-MID CENTURY/CLOCK-MID CENTURY2_lower audio.mp4'
   },
   {
     name: 'Dining Chair',
@@ -580,12 +585,16 @@ WIP_PROJECTS.forEach(function(p) {
   var card = document.createElement('div');
   card.className = 'product-card';
   card.style.cursor = 'pointer';
+  var videoBtn = p.video
+    ? '<button onclick="event.stopPropagation();document.getElementById(\'wip-vid-player\').src=\'' + p.video + '\';document.getElementById(\'wip-vid\').style.display=\'flex\'" style="font-size:11px;padding:7px 14px;border-radius:100px;border:0.5px solid rgba(245,232,208,0.35);background:rgba(245,232,208,0.08);color:#e8d5b8;cursor:pointer;font-family:\'DM Sans\',sans-serif;">▶ Watch video</button>'
+    : '';
   card.innerHTML = '<div class="product-card-img">' +
     '<div class="ribbon-wrap"><div class="ribbon" style="background:#5a7a4a;">' + p.status + '</div></div>' +
     '<img src="' + p.cover + '" alt="' + p.name + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>' +
     '<div class="product-card-body">' +
     '<div class="product-card-tag">Work in Progress</div>' +
     '<div class="product-card-name">' + p.name + '</div>' +
+    (videoBtn ? '<div style="margin-top:0.5rem;">' + videoBtn + '</div>' : '') +
     '</div>';
   card.onclick = function() { lbOpen(p.photos, p.name, 0); };
   wipGrid.appendChild(card);
