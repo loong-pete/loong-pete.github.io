@@ -554,6 +554,7 @@ var WIP_PROJECTS = [
     status: 'In Progress',
     cover: 'CLOCK-MID CENTURY/MID CENTURY CLOCK BY LOONGPETE(CREATED BY GEMINI)3D.png',
     photos: [
+      'CLOCK-MID CENTURY/MID CENTURY CLOCK BY LOONGPETE(CREATED BY GEMINI)3D.png',
       'CLOCK-MID CENTURY/CLOCK-MID CENTURY1.jpeg',
       'CLOCK-MID CENTURY/CLOCK-MID CENTURY3.jpeg',
       'CLOCK-MID CENTURY/CLOCK-MID CENTURY4.jpeg',
@@ -586,7 +587,7 @@ WIP_PROJECTS.forEach(function(p) {
   card.className = 'product-card';
   card.style.cursor = 'pointer';
   var videoBtn = p.video
-    ? '<button onclick="event.stopPropagation();document.getElementById(\'wip-vid-player\').src=\'' + p.video + '\';document.getElementById(\'wip-vid\').style.display=\'flex\'" style="font-size:11px;padding:7px 14px;border-radius:100px;border:0.5px solid rgba(245,232,208,0.35);background:rgba(245,232,208,0.08);color:#e8d5b8;cursor:pointer;font-family:\'DM Sans\',sans-serif;">▶ Watch video</button>'
+    ? '<button onclick="event.stopPropagation();document.getElementById(\'wip-vid-player\').src=\'' + p.video + '\';document.getElementById(\'wip-vid\').style.display=\'flex\'" style="font-size:11px;padding:7px 14px;border-radius:100px;border:none;background:#c8812a;color:#fff8f0;cursor:pointer;font-family:\'DM Sans\',sans-serif;font-weight:600;">▶ Watch video</button>'
     : '';
   card.innerHTML = '<div class="product-card-img">' +
     '<div class="ribbon-wrap"><div class="ribbon" style="background:#5a7a4a;">' + p.status + '</div></div>' +
