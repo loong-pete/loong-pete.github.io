@@ -359,14 +359,7 @@ footer { background: url('Black-Walnut-Wood.jpg') right top/cover no-repeat; box
       <div class="section-title">In the Garage</div>
     </div>
   </div>
-  <p style="font-size:15px;color:var(--text-muted);line-height:1.75;margin-bottom:2rem;max-width:600px;">This is really a step up for me. A chair is one of the hardest things to build. It's in the prototype stage and I'm planning to build it with walnut. To be continued...</p>
-  <div class="garage-wrap">
-    <div class="garage-main" onclick="lbOpen(_garageImgs,'Dining Chair — In Progress',0)">
-      <img id="garage-main-img" src="DINNING CHAIR/DINING CHAIR (IN PROGRESS)13.jpg" alt="Dining Chair in progress" />
-      <div class="garage-badge">Dining Chair — In Progress</div>
-    </div>
-    <div class="garage-thumbs" id="garage-thumbs"></div>
-  </div>
+  <div class="product-grid" id="wip-grid"></div>
 </section>
 
 <!-- COMMISSION -->
@@ -551,25 +544,51 @@ LP_PRODUCTS.forEach(function(p) {
 });
 
 // ── Garage ───────────────────────────────────────────────────
-var _garageImgs = [
-  'DINNING CHAIR/DINING CHAIR (IN PROGRESS)1.jpeg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)2.jpeg',
-  'DINNING CHAIR/DINING CHAIR (IN PROGRESS)3.jpeg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)4.jpeg',
-  'DINNING CHAIR/DINING CHAIR (IN PROGRESS)5.jpeg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)6.jpeg',
-  'DINNING CHAIR/DINING CHAIR (IN PROGRESS)7.jpeg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)8.jpeg',
-  'DINNING CHAIR/DINING CHAIR (IN PROGRESS)9.jpeg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)10.jpeg',
-  'DINNING CHAIR/DINING CHAIR (IN PROGRESS)11.jpeg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)12.jpeg',
-  'DINNING CHAIR/DINING CHAIR (IN PROGRESS)13.jpg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)14.jpg',
-  'DINNING CHAIR/DINING CHAIR (IN PROGRESS)15.jpg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)16.jpg'
+var WIP_PROJECTS = [
+  {
+    name: 'Mid Century Clock',
+    status: 'In Progress',
+    cover: 'CLOCK-MID CENTURY/CLOCK-MID CENTURY1.jpeg',
+    photos: [
+      'CLOCK-MID CENTURY/CLOCK-MID CENTURY1.jpeg',
+      'CLOCK-MID CENTURY/CLOCK-MID CENTURY3.jpeg',
+      'CLOCK-MID CENTURY/CLOCK-MID CENTURY4.jpeg',
+      'CLOCK-MID CENTURY/CLOCK-MID CENTURY5.jpeg',
+      'CLOCK-MID CENTURY/CLOCK-MID CENTURY6.jpeg',
+      'CLOCK-MID CENTURY/CLOCK-MID CENTURY7.jpeg'
+    ]
+  },
+  {
+    name: 'Dining Chair',
+    status: 'Prototype',
+    cover: 'DINNING CHAIR/DINING CHAIR (IN PROGRESS)13.jpg',
+    photos: [
+      'DINNING CHAIR/DINING CHAIR (IN PROGRESS)1.jpeg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)2.jpeg',
+      'DINNING CHAIR/DINING CHAIR (IN PROGRESS)3.jpeg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)4.jpeg',
+      'DINNING CHAIR/DINING CHAIR (IN PROGRESS)5.jpeg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)6.jpeg',
+      'DINNING CHAIR/DINING CHAIR (IN PROGRESS)7.jpeg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)8.jpeg',
+      'DINNING CHAIR/DINING CHAIR (IN PROGRESS)9.jpeg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)10.jpeg',
+      'DINNING CHAIR/DINING CHAIR (IN PROGRESS)11.jpeg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)12.jpeg',
+      'DINNING CHAIR/DINING CHAIR (IN PROGRESS)13.jpg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)14.jpg',
+      'DINNING CHAIR/DINING CHAIR (IN PROGRESS)15.jpg','DINNING CHAIR/DINING CHAIR (IN PROGRESS)16.jpg'
+    ]
+  }
 ];
-var thumbWrap = document.getElementById('garage-thumbs');
-_garageImgs.forEach(function(src, i) {
-  var img = document.createElement('img');
-  img.src = src; img.className = 'garage-thumb' + (i === 12 ? ' active' : '');
-  img.onclick = function() {
-    document.getElementById('garage-main-img').src = src;
-    document.querySelectorAll('.garage-thumb').forEach(function(t,j){ t.classList.toggle('active', j===i); });
-  };
-  thumbWrap.appendChild(img);
+
+var wipGrid = document.getElementById('wip-grid');
+WIP_PROJECTS.forEach(function(p) {
+  var card = document.createElement('div');
+  card.className = 'product-card';
+  card.style.cursor = 'pointer';
+  card.innerHTML = '<div class="product-card-img">' +
+    '<div class="ribbon-wrap"><div class="ribbon" style="background:#5a7a4a;">' + p.status + '</div></div>' +
+    '<img src="' + p.cover + '" alt="' + p.name + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" /></div>' +
+    '<div class="product-card-body">' +
+    '<div class="product-card-tag">Work in Progress</div>' +
+    '<div class="product-card-name">' + p.name + '</div>' +
+    '</div>';
+  card.onclick = function() { lbOpen(p.photos, p.name, 0); };
+  wipGrid.appendChild(card);
 });
 
 // ── Lightbox ─────────────────────────────────────────────────
