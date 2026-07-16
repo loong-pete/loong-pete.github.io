@@ -252,7 +252,8 @@ var LP_DETAILS = {
     name: 'Mid Century Clock', tag: 'Decor', price: 'TBD',
     desc: 'A handcrafted mid century modern wall clock made in my garage in San Antonio, TX. Each piece is shaped by hand with care and a little sawdust.',
     photos: ['CLOCK-MID CENTURY/CLOCK-MID CENTURY18finished.jpeg','CLOCK-MID CENTURY/MID CENTURY CLOCK BY LOONGPETE(CREATED BY GEMINI)3D.png','CLOCK-MID CENTURY/CLOCK-MID CENTURY14finished.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY15finished.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY16finished.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY17finished.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY1.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY3.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY4.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY5.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY6.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY7.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY8.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY19.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY20.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY21.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY22.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY23.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY24.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY25.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY26.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY27.jpeg','CLOCK-MID CENTURY/CLOCK-MID CENTURY28.jpeg'],
-    dimensions: 'TBD', wood: 'TBD', finish: 'TBD', custom: 'Free engraving available — add a name, quote, or date.', etsy: ''
+    dimensions: 'TBD', wood: 'TBD', finish: 'TBD', custom: 'Free engraving available — add a name, quote, or date.', etsy: '',
+    videos: ['CLOCK-MID CENTURY/CLOCK-MID CENTURY9-finished.MOV','CLOCK-MID CENTURY/CLOCK-MID CENTURY10.mov','CLOCK-MID CENTURY/CLOCK-MID CENTURY11.MOV','CLOCK-MID CENTURY/CLOCK-MID CENTURY12.MOV','CLOCK-MID CENTURY/CLOCK-MID CENTURY13.MOV']
   },
   'shoe-horn-long-short': {
     name: 'Shoe Horn — Long & Extra Long', tag: 'Home', price: 'Long $65 · Extra Long $75',
@@ -451,14 +452,17 @@ function init() {
   });
 
   // Video thumbnail
-  if (prod.video) {
+  var allVideos = [];
+  if (prod.video) allVideos.push(prod.video);
+  if (prod.videos) allVideos = allVideos.concat(prod.videos);
+  allVideos.forEach(function(vid, vi) {
     var vThumb = document.createElement('div');
     vThumb.style.cssText = 'width:64px;height:50px;border-radius:8px;background:#d4a870;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;border:2px solid #b07040;gap:3px;';
-    vThumb.innerHTML = '<span style="font-size:16px;color:#1c0e04;">&#9654;</span><span style="font-size:8px;color:#1c0e04;font-family:sans-serif;font-weight:700;letter-spacing:0.05em;">VIDEO</span>';
-    vThumb.title = 'Play video';
-    vThumb.onclick = function() { vidOpen(prod.video); };
+    vThumb.innerHTML = '<span style="font-size:16px;color:#1c0e04;">&#9654;</span><span style="font-size:8px;color:#1c0e04;font-family:sans-serif;font-weight:700;letter-spacing:0.05em;">VIDEO ' + (allVideos.length > 1 ? (vi+1) : '') + '</span>';
+    vThumb.title = 'Play video ' + (vi+1);
+    (function(v){ vThumb.onclick = function() { vidOpen(v); }; })(vid);
     thumbWrap.appendChild(vThumb);
-  }
+  });
 }
 
 function swapMain(src, idx) {
